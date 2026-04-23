@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Trusted Machine™ — Midaire Counsel White Paper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2d52;--ocean:#2b7dbb;--ocean-mid:#4a9fd4;--ocean-light:#7ec1e8;
+  --gray:#f0eeea;--gray-mid:#e6e3dc;--white:#ffffff;--charcoal:#1c1c2e;
+  --text:#1a2d52;--muted:#5a6475;--faint:#8a93a2;
+  --rule:rgba(26,45,82,0.1);--rule-o:rgba(43,125,187,0.18);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;font-weight:300;color:var(--text);background:var(--white);line-height:1.75;font-size:16px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:70px;border-bottom:1px solid var(--rule)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--navy);text-decoration:none;letter-spacing:-0.01em}
+.nav-logo span{color:var(--ocean)}
+.nav-back{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:500;transition:color 0.2s}
+.nav-back:hover{color:var(--ocean)}
+.nav-back::before{content:'← ';font-size:12px}
+
+/* HERO */
+#hero{min-height:100vh;background:var(--charcoal);display:flex;align-items:center;padding:100px 5vw 80px;position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(43,125,187,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(43,125,187,0.06) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero-accent{position:absolute;top:0;right:0;width:50vw;height:100%;background:linear-gradient(135deg,rgba(43,125,187,0.08) 0%,rgba(126,193,232,0.03) 100%);clip-path:polygon(20% 0%,100% 0%,100% 100%,0% 100%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.1fr 0.9fr;gap:6vw;align-items:center;position:relative;z-index:2}
+.hero-left{animation:fu 0.9s ease both}
+.hero-right{animation:fu 0.9s ease 0.2s both}
+@keyframes fu{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+.wp-tag{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ocean-light);margin-bottom:1.5rem;font-weight:600;border:1px solid rgba(126,193,232,0.3);padding:6px 14px}
+.wp-tag::before{content:'';display:block;width:20px;height:1px;background:var(--ocean-light)}
+
+h1{font-family:'Playfair Display',serif;font-size:clamp(38px,5vw,68px);font-weight:500;line-height:1.05;color:var(--white);margin-bottom:0.5rem;letter-spacing:-0.02em}
+h1 em{font-style:italic;color:var(--ocean-light)}
+.hero-trademark{font-size:14px;color:rgba(255,255,255,0.3);font-weight:300;margin-bottom:1.75rem;letter-spacing:0.04em}
+.hero-sub{font-size:17px;color:rgba(255,255,255,0.6);max-width:480px;margin-bottom:2.5rem;font-weight:300;line-height:1.85}
+
+.authors{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:2.5rem}
+.author-line{font-size:13px;color:rgba(255,255,255,0.45);font-weight:300;letter-spacing:0.03em}
+.author-line strong{color:rgba(255,255,255,0.75);font-weight:500}
+
+.hero-meta{display:flex;gap:2rem;flex-wrap:wrap}
+.meta-item{text-align:left}
+.meta-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--ocean-light);line-height:1}
+.meta-lbl{font-size:11px;color:rgba(255,255,255,0.35);font-weight:300;letter-spacing:0.08em;text-transform:uppercase;margin-top:3px}
+
+/* GATE CARD */
+.gate-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);padding:2.5rem}
+.gate-card h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--white);margin-bottom:0.5rem;line-height:1.3}
+.gate-intro{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:1.75rem;line-height:1.75;font-weight:300}
+.gate-form .fg{margin-bottom:1rem}
+.gate-form label{display:block;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.35rem;font-weight:400}
+.gate-form input{width:100%;padding:11px 14px;font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:300;color:var(--white);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);outline:none;transition:border-color 0.2s}
+.gate-form input:focus{border-color:var(--ocean-mid);background:rgba(255,255,255,0.1)}
+.gate-form input::placeholder{color:rgba(255,255,255,0.2)}
+.gate-btn{width:100%;padding:14px;background:var(--ocean);color:var(--white);font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;transition:background 0.2s;margin-top:0.5rem}
+.gate-btn:hover{background:var(--ocean-mid)}
+.gate-note{font-size:11px;color:rgba(255,255,255,0.25);text-align:center;margin-top:0.65rem;line-height:1.55}
+.gate-success{display:none;text-align:center;padding:1.5rem 0.5rem}
+.gate-success svg{margin:0 auto 1rem;display:block}
+.gate-success p{font-size:14px;color:rgba(255,255,255,0.55);font-weight:300;line-height:1.7;margin-bottom:1.25rem}
+.gate-success a{display:inline-block;padding:13px 28px;background:var(--ocean);color:#fff;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;transition:background 0.2s}
+.gate-success a:hover{background:var(--ocean-mid)}
+
+/* ABSTRACT */
+#abstract{background:var(--gray);padding:7rem 0}
+.si{max-width:1100px;margin:0 auto;padding:0 5vw}
+.stag{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ocean);margin-bottom:0.9rem;font-weight:600}
+.stag::before{content:'';display:block;width:24px;height:2px;background:var(--ocean);flex-shrink:0}
+.sh2{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,42px);font-weight:500;color:var(--navy);margin-bottom:1.5rem;letter-spacing:-0.01em}
+.sh2 em{font-style:italic;color:var(--ocean)}
+.abstract-grid{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:start;margin-top:1rem}
+.abstract-text p{color:var(--muted);font-size:16px;margin-bottom:1.25rem;line-height:1.85;font-weight:300}
+.abstract-text p strong{color:var(--navy);font-weight:600}
+.abstract-text blockquote{border-left:3px solid var(--ocean);padding:1rem 1.5rem;margin:1.5rem 0;background:var(--white)}
+.abstract-text blockquote p{margin:0;font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);font-style:italic;font-weight:400;line-height:1.7}
+
+/* THEMES */
+.themes-grid{display:flex;flex-direction:column;gap:1px;background:var(--rule)}
+.theme-item{background:var(--white);padding:1.5rem 1.75rem;border-left:3px solid transparent;transition:border-color 0.2s,background 0.2s}
+.theme-item:hover{border-left-color:var(--ocean);background:var(--gray)}
+.theme-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:400;color:rgba(43,125,187,0.2);line-height:1;margin-bottom:0.5rem}
+.theme-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:0.35rem}
+.theme-desc{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300}
+
+/* CONTROLS */
+#controls{background:var(--white);padding:7rem 0}
+.controls-intro{font-size:16px;color:var(--muted);max-width:540px;margin-bottom:3rem;font-weight:300}
+.controls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule)}
+.control-card{background:var(--gray);padding:2rem 1.75rem;border-top:3px solid transparent;transition:border-color 0.25s,background 0.25s}
+.control-card:hover{border-top-color:var(--ocean);background:var(--white)}
+.ctrl-num{font-family:'Playfair Display',serif;font-size:40px;font-weight:400;color:rgba(43,125,187,0.18);line-height:1;margin-bottom:0.75rem}
+.ctrl-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:0.5rem;letter-spacing:0.02em}
+.ctrl-desc{font-size:13px;color:var(--muted);line-height:1.78;font-weight:300}
+
+/* QUOTE */
+#pullquote{background:var(--navy);padding:6rem 5vw;text-align:center}
+.pq-inner{max-width:780px;margin:0 auto}
+.pq-mark{font-family:'Playfair Display',serif;font-size:80px;color:rgba(126,193,232,0.2);line-height:0.5;margin-bottom:1.5rem;display:block}
+.pq-text{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,34px);font-weight:400;color:var(--white);line-height:1.45;font-style:italic;margin-bottom:1.5rem}
+.pq-attr{font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);font-weight:500}
+
+/* CTA */
+#cta{background:var(--gray);padding:7rem 0}
+.cta-inner{max-width:700px;margin:0 auto;text-align:center;padding:0 5vw}
+.cta-inner .stag{justify-content:center}
+.cta-inner .stag::before{display:none}
+.cta-inner h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,46px);font-weight:500;color:var(--navy);margin-bottom:1rem;letter-spacing:-0.01em}
+.cta-inner p{font-size:16px;color:var(--muted);margin-bottom:2.5rem;font-weight:300;line-height:1.8}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-p{background:var(--navy);color:var(--white);font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;padding:15px 32px;text-decoration:none;transition:background 0.2s;display:inline-block}
+.btn-p:hover{background:var(--ocean)}
+.btn-g{color:var(--navy);font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;padding:14px 32px;text-decoration:none;border:1px solid var(--rule-o);display:inline-block;transition:all 0.2s}
+.btn-g:hover{border-color:var(--ocean);color:var(--ocean)}
+
+/* FOOTER */
+footer{background:var(--charcoal);border-top:1px solid rgba(255,255,255,0.07);padding:1.75rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+footer p{font-size:11px;color:rgba(255,255,255,0.22);letter-spacing:0.04em}
+.foot-logo{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:rgba(255,255,255,0.5);text-decoration:none}
+.foot-logo span{color:var(--ocean-light)}
+
+@media(max-width:900px){
+  .hero-inner,.abstract-grid{grid-template-columns:1fr}
+  .hero-right{order:-1}
+  .controls-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://midaire.com" class="nav-logo">Midaire <span>Counsel</span></a>
+  <a href="https://midaire.com" class="nav-back">Back to midaire.com</a>
+</nav>
+
+<section id="hero">
+  <div class="hero-accent"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="wp-tag">White Paper &middot; 2026</div>
+      <h1>The Trusted<br/><em>Machine</em>™</h1>
+      <p class="hero-trademark">Midaire Counsel &middot; Michael LeBrun, J.D.</p>
+      <p class="hero-sub">How an artificial intelligence tool, properly deployed, makes legal practice faster, safer, and more defensible — for attorneys, for firms, and for the clients who depend on them.</p>
+      <div class="authors">
+        <div class="author-line"><strong>Author:</strong> Michael LeBrun, J.D. &mdash; Managing Attorney, Midaire Counsel</div>
+        <div class="author-line"><strong>Topics:</strong> Legal AI Ethics &middot; Privilege &middot; Malpractice Risk &middot; Value Pricing</div>
+        <div class="author-line"><strong>Published:</strong> April 2026 &middot; 7 Sections &middot; 6 Controls Framework</div>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-item"><div class="meta-num">6</div><div class="meta-lbl">Risk Controls</div></div>
+        <div class="meta-item"><div class="meta-num">3</div><div class="meta-lbl">Implementation Tiers</div></div>
+        <div class="meta-item"><div class="meta-num">2</div><div class="meta-lbl">Key Cases Analyzed</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="gate-card" id="gateWrap">
+        <h2>Download the White Paper</h2>
+        <p class="gate-intro">Free access. Name and email only. We'll send you updates as the legal AI landscape evolves — and you can unsubscribe anytime.</p>
+        <form class="gate-form" id="gateForm" action="https://formspree.io/f/mdapovgr" method="POST">
+          <input type="hidden" name="_subject" value="White Paper Download — The Trusted Machine" />
+          <input type="hidden" name="source" value="whitepaper-gate" />
+          <div class="fg"><label for="gname">Full Name</label><input type="text" id="gname" name="name" placeholder="Jane Smith" required /></div>
+          <div class="fg"><label for="gemail">Email Address</label><input type="email" id="gemail" name="email" placeholder="jane@company.com" required /></div>
+          <div class="fg"><label for="gorg">Organization (optional)</label><input type="text" id="gorg" name="organization" placeholder="Smith & Associates" /></div>
+          <button type="submit" class="gate-btn">Download the Paper &rarr;</button>
+          <p class="gate-note">No spam. No sales calls. Your information is never shared.</p>
+        </form>
+        <div class="gate-success" id="gateSuccess">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#7ec1e8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <p>Thank you. Your download is ready — click below to open the white paper.</p>
+          <a href="https://docs.google.com/document/d/1DiaOQ95-fXlHjcR5jNe5LrAf5XkkF3fi/edit?usp=sharing" target="_blank">Open The Trusted Machine™ &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="abstract">
+  <div class="si">
+    <div class="stag">Executive Summary</div>
+    <h2 class="sh2">The Legal Profession Is at an <em>Inflection Point</em></h2>
+    <div class="abstract-grid">
+      <div class="abstract-text">
+        <p>The overwhelming majority of attorneys fall into one of two categories: those who are <strong>using AI without adequate safeguards</strong>, and those who are <strong>refusing to use it at all</strong>. Both positions carry significant risk.</p>
+        <p>Attorneys using consumer AI platforms without controls risk sanctions, bar complaints, and malpractice exposure. The cases are already in the reporters. In 2023, <em>Mata v. Avianca</em> established the foundational cautionary tale. In 2026, <em>United States v. Heppner</em> answered the privilege question attorneys feared most — and the answer was "No." But Heppner is not the whole story.</p>
+        <p>Attorneys who refuse to engage face a different but equally serious problem: a widening competence gap, rising costs relative to AI-augmented competitors, and a growing body of ethics guidance suggesting that technological competence is no longer optional.</p>
+        <blockquote><p>"The attorney who refuses to engage with AI today is not protecting their clients. They are ceding advantage to opposing counsel who may already be using AI to research more thoroughly, prepare more completely, and review more systematically than any unaided human ever could."</p></blockquote>
+        <p>This paper constructs a framework — <strong>The Trusted Machine</strong> — that addresses every identified failure mode through six documented controls. It is not aspirational. It is operational.</p>
+      </div>
+      <div>
+        <div class="stag" style="margin-bottom:1.25rem">Seven Sections</div>
+        <div class="themes-grid">
+          <div class="theme-item"><div class="theme-num">I</div><div class="theme-title">The Ground Is Already Moving</div><div class="theme-desc">The Luddite fallacy in law, the three fears driving avoidance, and why each is answerable.</div></div>
+          <div class="theme-item"><div class="theme-num">II</div><div class="theme-title">The Legal Landscape Has Already Shifted</div><div class="theme-desc">Mata, Heppner, and what the privilege analysis actually means for attorney AI use.</div></div>
+          <div class="theme-item"><div class="theme-num">III</div><div class="theme-title">The Framework That Eliminates the Risk</div><div class="theme-desc">Six controls that structurally address every known AI ethics failure mode.</div></div>
+          <div class="theme-item"><div class="theme-num">IV</div><div class="theme-title">What This Means in Practice</div><div class="theme-desc">A typical matter walkthrough and the connection to value-based pricing.</div></div>
+          <div class="theme-item"><div class="theme-num">V</div><div class="theme-title">The Implementation Roadmap</div><div class="theme-desc">Three tiers. Any firm size. Starting with no technology required.</div></div>
+          <div class="theme-item"><div class="theme-num">VI &amp; VII</div><div class="theme-title">Fear, Benefits, and the Honest Answer</div><div class="theme-desc">Addressing the existential question directly — and what the profession stands to gain.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="controls">
+  <div class="si">
+    <div class="stag">The Six Controls</div>
+    <h2 class="sh2">A Framework Built on <em>Documented Practice</em></h2>
+    <p class="controls-intro">Every known AI-related ethics violation in legal practice traces to one of two failure modes. The Trusted Machine structurally eliminates both through six controls that are documented, implemented, and available for review.</p>
+    <div class="controls-grid">
+      <div class="control-card"><div class="ctrl-num">01</div><div class="ctrl-title">Commercial API Only</div><div class="ctrl-desc">All AI work conducted through the commercial Anthropic API — not consumer interfaces. Contractual DPA, seven-day auto-deletion, no model training on client data.</div></div>
+      <div class="control-card"><div class="ctrl-num">02</div><div class="ctrl-title">Data Masking Protocol</div><div class="ctrl-desc">Client-identifying information is stripped before every submission. Names, case numbers, and matter identifiers replaced with bracketed placeholders. Substitution key retained in the matter file.</div></div>
+      <div class="control-card"><div class="ctrl-num">03</div><div class="ctrl-title">Attorney Review of Every Output</div><div class="ctrl-desc">No AI output reaches a client matter without review, verification, and approval by a licensed attorney. Every factual statement verified. Every citation independently confirmed. AI output treated as a first draft from a junior associate — without exception.</div></div>
+      <div class="control-card"><div class="ctrl-num">04</div><div class="ctrl-title">Matter-Level Audit Log</div><div class="ctrl-desc">Every AI interaction is logged by date, matter reference, tool, task, reviewing attorney, and any material corrections. The evidentiary foundation for defense in any disciplinary or malpractice proceeding.</div></div>
+      <div class="control-card"><div class="ctrl-num">05</div><div class="ctrl-title">Written AI Use Policy</div><div class="ctrl-desc">Approved tools, prohibited uses, data handling requirements, supervision standards, and client disclosure obligations — documented, reviewed annually, updated as ethics guidance evolves.</div></div>
+      <div class="control-card"><div class="ctrl-num">06</div><div class="ctrl-title">Client Disclosure</div><div class="ctrl-desc">Every engagement agreement includes AI disclosure language. Express written consent obtained for particularly sensitive matters. Most firms using AI are not telling their clients. This is both an ethical obligation and a competitive differentiator.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pullquote">
+  <div class="pq-inner">
+    <span class="pq-mark">&ldquo;</span>
+    <p class="pq-text">The machine can be trusted. The question is whether the attorney operating it has earned that trust. The framework in these pages is how you do that.</p>
+    <p class="pq-attr">— The Trusted Machine™, Conclusion &middot; Midaire Counsel 2026</p>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="cta-inner">
+    <div class="stag">Get the Full Paper</div>
+    <h2>Read The Trusted Machine™</h2>
+    <p>The complete white paper covers all seven sections, both key cases analyzed in full, the three-tier implementation roadmap, and the value pricing connection. Free download — name and email only.</p>
+    <div class="cta-btns">
+      <a href="#hero" class="btn-p">Download the Paper &rarr;</a>
+      <a href="https://midaire.com/#contact" class="btn-g">Talk to Midaire Counsel</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="https://midaire.com" class="foot-logo">Midaire <span>Counsel</span></a>
+  <p>&copy; 2026 Midaire LLC &middot; Atlanta, Georgia &middot; Licensed in Georgia and Alabama &middot; Attorney advertising. Prior results do not guarantee similar outcomes.</p>
+</footer>
+
+<script>
+document.getElementById('gateForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = this;
+  const btn = form.querySelector('.gate-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  try {
+    const resp = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (resp.ok) {
+      form.style.display = 'none';
+      document.getElementById('gateSuccess').style.display = 'block';
+    } else {
+      btn.textContent = 'Try Again';
+      btn.disabled = false;
+    }
+  } catch(err) {
+    btn.textContent = 'Try Again';
+    btn.disabled = false;
+  }
+});
+
+// Scroll animations
+const obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(x) {
+    if (x.isIntersecting) {
+      x.target.style.opacity = '1';
+      x.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.control-card,.theme-item').forEach(function(el) {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
