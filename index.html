@@ -550,4 +550,15 @@ function calcAP(){
   var c=MC[CM];
   var lo=c.hr[0],hi=c.hr[1];
   document.getElementById('ap-r-val').textContent=fmt(val);
-  document.getElementById('ap-r-none').textC
+  document.getElementById('ap-r-none').textContent='$'+floor.toLocaleString();
+  document.getElementById('ap-r-half').textContent=fmt(hf);
+  document.getElementById('ap-r-full').textContent=fmt(ff);
+  document.getElementById('ap-r-net').textContent=fmt(net);
+  document.getElementById('ap-r-roi').textContent=roi+'\u00d7 return on legal fee';
+  document.getElementById('ap-r-asym').innerHTML='Your worst case: <strong style="color:var(--ocean)">'+fmt(floor)+'</strong>. Hourly worst case: <strong style="color:#b83232">'+fmt(lo*hr)+'\u2013'+fmt(hi*hr)+'</strong>. Under hourly billing you pay regardless of outcome.';
+  document.getElementById('ap-r-hourly').innerHTML='~'+lo+'\u2013'+hi+' hrs at $'+hr+'/hr = <strong style="color:#b83232">'+fmt(lo*hr)+'\u2013'+fmt(hi*hr)+'</strong>, paid regardless of outcome.';
+}
+calcAP();
+</script>
+</body>
+</html>
