@@ -283,6 +283,7 @@ footer p{font-size:11px;color:rgba(255,255,255,0.22);letter-spacing:0.04em;max-w
     <div class="ptabs">
       <button class="ptab on" onclick="switchTab('fgc',this)">Fractional GC Cost Calculator</button>
       <button class="ptab" onclick="switchTab('ap',this)">AirePocket Value Pricing</button>
+      <button class="ptab" onclick="switchTab('tiers',this)">Service Tiers &amp; Fees</button>
     </div>
 
     <div id="panel-fgc" class="pp on">
@@ -334,6 +335,87 @@ footer p{font-size:11px;color:rgba(255,255,255,0.22);letter-spacing:0.04em;max-w
         </div>
       </div>
       <p style="font-size:12px;color:var(--faint);font-style:italic;border-top:1px solid var(--rule);padding-top:1rem;margin-top:1.5rem;">* AirePocket fees require a written baseline agreement before engagement. Floor fee applies in all scenarios. Percentage and structure vary by matter type and complexity.</p>
+    </div>
+
+    <div id="panel-tiers" class="pp">
+      <p class="ppi">Four tiers. One framework. The primary differentiator is availability and depth of integration &mdash; how embedded Counsel is in your operations and how quickly your calls get answered. All fees in USD, billed monthly in advance.</p>
+
+      <div style="background:var(--navy);padding:1.5rem 2rem;margin-bottom:2rem;border-left:4px solid var(--ocean-light)">
+        <p style="font-family:'Playfair Display',serif;font-size:17px;color:var(--white);font-style:italic;line-height:1.7;margin:0">&ldquo;You don&rsquo;t pay your electric bill because you expect the lights to be on around the clock. You pay it so they come on when you flip the switch. On Call is that relationship &mdash; the certainty that counsel knows your business and is available when something comes up.&rdquo;</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--rule);margin-bottom:1.5rem">
+
+        <div style="background:var(--gray);padding:2rem 1.75rem;border-top:4px solid var(--ocean-light);display:flex;flex-direction:column">
+          <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ocean);font-weight:600;margin-bottom:0.5rem">On Call</div>
+          <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--navy);line-height:1;margin-bottom:0.25rem">$750<span style="font-size:16px;color:var(--muted)">/mo</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:1.25rem;font-weight:300">The utility bill model</div>
+          <div style="flex:1">
+            <div style="font-size:13px;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:1rem">For <strong style="color:var(--navy)">startups and small businesses</strong> that need an attorney available when something comes up &mdash; without the overhead of constant legal activity.</div>
+            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:0.5rem">
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Counsel knows your business</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Available when issues arise</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Annual Legal Health Check</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Response within 1 business day</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Monthly activity report</li>
+            </ul>
+          </div>
+          <a href="#contact" style="display:block;margin-top:1.5rem;padding:11px;background:var(--navy);color:#fff;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;text-align:center;transition:background 0.2s" onmouseover="this.style.background='var(--ocean)'" onmouseout="this.style.background='var(--navy)'">Get Started &rarr;</a>
+        </div>
+
+        <div style="background:var(--white);padding:2rem 1.75rem;border-top:4px solid var(--ocean);display:flex;flex-direction:column;border:1px solid var(--rule);border-top:4px solid var(--ocean)">
+          <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ocean);font-weight:600;margin-bottom:0.5rem">Essential</div>
+          <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--navy);line-height:1;margin-bottom:0.25rem">$3,000<span style="font-size:16px;color:var(--muted)">/mo</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:1.25rem;font-weight:300">Ongoing legal judgment</div>
+          <div style="flex:1">
+            <div style="font-size:13px;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:1rem">For <strong style="color:var(--navy)">companies at the threshold</strong> of needing ongoing legal judgment &mdash; reliable senior access for the legal questions that arise in the normal course of business.</div>
+            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:0.5rem">
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Everything in On Call</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Quarterly Legal Health Check</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Contract review &amp; negotiation</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Response within 4 business hours</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Governance &amp; compliance advisory</li>
+            </ul>
+          </div>
+          <a href="#contact" style="display:block;margin-top:1.5rem;padding:11px;background:var(--ocean);color:#fff;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;text-align:center;transition:background 0.2s" onmouseover="this.style.background='var(--ocean-mid)'" onmouseout="this.style.background='var(--ocean)'">Get Started &rarr;</a>
+        </div>
+
+        <div style="background:var(--gray);padding:2rem 1.75rem;border-top:4px solid var(--navy);display:flex;flex-direction:column">
+          <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ocean);font-weight:600;margin-bottom:0.5rem">Advisory</div>
+          <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--navy);line-height:1;margin-bottom:0.25rem">$6,000<span style="font-size:16px;color:var(--muted)">/mo</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:1.25rem;font-weight:300">True embedded advisor</div>
+          <div style="flex:1">
+            <div style="font-size:13px;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:1rem">For <strong style="color:var(--navy)">companies with active ongoing needs</strong> &mdash; where Counsel functions as a true embedded advisor engaged in operational decisions and proactive legal management.</div>
+            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:0.5rem">
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Everything in Essential</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Monthly Legal Health Check</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Transaction support &amp; deal counsel</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Response within 2 business hours</li>
+              <li style="font-size:12px;color:var(--muted);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean)">&#8250;</span>Board &amp; leadership team advisory</li>
+            </ul>
+          </div>
+          <a href="#contact" style="display:block;margin-top:1.5rem;padding:11px;background:var(--navy);color:#fff;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;text-align:center;transition:background 0.2s" onmouseover="this.style.background='var(--ocean)'" onmouseout="this.style.background='var(--navy)'">Get Started &rarr;</a>
+        </div>
+
+        <div style="background:var(--charcoal);padding:2rem 1.75rem;border-top:4px solid var(--ocean-light);display:flex;flex-direction:column">
+          <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ocean-light);font-weight:600;margin-bottom:0.5rem">Priority</div>
+          <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--white);line-height:1;margin-bottom:0.25rem">$9,500<span style="font-size:16px;color:rgba(255,255,255,0.4)">/mo</span></div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:1.25rem;font-weight:300">Dedicated in-house equivalent</div>
+          <div style="flex:1">
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.8;font-weight:300;margin-bottom:1rem">The closest approximation to <strong style="color:var(--white)">dedicated in-house General Counsel</strong> &mdash; proactively monitoring, advising, and engaged as a genuine member of the leadership team.</div>
+            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:0.5rem">
+              <li style="font-size:12px;color:rgba(255,255,255,0.5);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean-light)">&#8250;</span>Everything in Advisory</li>
+              <li style="font-size:12px;color:rgba(255,255,255,0.5);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean-light)">&#8250;</span>Weekly Legal Health Check</li>
+              <li style="font-size:12px;color:rgba(255,255,255,0.5);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean-light)">&#8250;</span>Same-day response commitment</li>
+              <li style="font-size:12px;color:rgba(255,255,255,0.5);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean-light)">&#8250;</span>Proactive risk monitoring</li>
+              <li style="font-size:12px;color:rgba(255,255,255,0.5);font-weight:300;padding-left:1.1rem;position:relative"><span style="position:absolute;left:0;color:var(--ocean-light)">&#8250;</span>Full leadership team integration</li>
+            </ul>
+          </div>
+          <a href="#contact" style="display:block;margin-top:1.5rem;padding:11px;background:var(--ocean);color:#fff;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;text-align:center;transition:background 0.2s" onmouseover="this.style.background='var(--ocean-mid)'" onmouseout="this.style.background='var(--ocean)'">Get Started &rarr;</a>
+        </div>
+
+      </div>
+      <p style="font-size:12px;color:var(--faint);font-style:italic;border-top:1px solid var(--rule);padding-top:1rem">* All tiers billed monthly in advance in USD. Work exceeding the scope of a tier is scoped and priced separately as a Project engagement. AirePocket value pricing available for qualifying transactions at any tier.</p>
     </div>
   </div>
 </section>
