@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirePocket™ — Value vs. Hourly</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:        #1a2744;
+    --navy-deep:   #0f1829;
+    --ocean:       #2196c4;
+    --ocean-light: #4ab8e0;
+    --ocean-pale:  #e8f6fc;
+    --gold:        #c09030;
+    --gold-light:  #e0b848;
+    --parchment:   #f5f2ec;
+    --ink:         #1a1e2e;
+    --mid:         #6a6a7a;
+    --rule:        #ddd8d0;
+    --rust:        #8b3030;
+    --sage:        #1e6644;
+    --white:       #ffffff;
+  }
+
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .widget {
+    width: 100%;
+    max-width: 680px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(26,39,68,0.14), 0 2px 8px rgba(26,39,68,0.08);
+  }
+
+  /* ── HEADER ── */
+  .widget-header {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 60%, #1a3a5c 100%);
+    padding: 28px 32px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .widget-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--navy), var(--ocean-light), var(--gold-light), var(--ocean-light), var(--navy));
+  }
+  .widget-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(33,150,196,0.15) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .header-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 6px;
+  }
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .header-title em { font-style: italic; color: var(--ocean-light); }
+  .header-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+
+  /* ── INPUT ZONE ── */
+  .input-zone {
+    padding: 24px 32px 20px;
+    background: var(--parchment);
+    border-bottom: 1px solid var(--rule);
+  }
+  .input-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .input-wrap {
+    flex: 1;
+    position: relative;
+  }
+  .input-prefix {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    color: var(--mid);
+    pointer-events: none;
+  }
+  .stake-input {
+    width: 100%;
+    padding: 12px 14px 12px 28px;
+    border: 1.5px solid var(--rule);
+    border-radius: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    color: var(--ink);
+    background: white;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -moz-appearance: textfield;
+  }
+  .stake-input::-webkit-outer-spin-button,
+  .stake-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .stake-input:focus {
+    border-color: var(--ocean);
+    box-shadow: 0 0 0 3px rgba(33,150,196,0.12);
+  }
+  .go-btn {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--ocean) 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0 22px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s, transform 0.1s;
+    box-shadow: 0 3px 12px rgba(33,150,196,0.3);
+  }
+  .go-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .go-btn:active { transform: translateY(0); }
+
+  .input-hint {
+    font-size: 11px;
+    color: var(--mid);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ── RESULTS ── */
+  .results {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .results.show {
+    display: block;
+    opacity: 1;
+  }
+
+  /* Stake banner */
+  .stake-banner {
+    background: var(--navy);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .stake-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 4px;
+  }
+  .stake-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--ocean-light);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stake-desc {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.45);
+    max-width: 300px;
+    line-height: 1.5;
+    text-align: right;
+  }
+
+  /* Comparison columns */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .comp-col {
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .comp-col.hourly {
+    background: #fdf8f8;
+    border-right: 1px solid var(--rule);
+  }
+  .comp-col.value {
+    background: #f6fbff;
+  }
+
+  .comp-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-bottom: 14px;
+  }
+  .comp-tag.hourly { background: rgba(139,48,48,0.1); color: var(--rust); }
+  .comp-tag.value  { background: rgba(33,150,196,0.12); color: #1a6090; }
+
+  .comp-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .hourly .comp-heading { color: var(--rust); }
+  .value  .comp-heading { color: var(--navy); }
+
+  .comp-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    gap: 8px;
+  }
+  .comp-row:last-child { border-bottom: none; }
+  .cr-label { font-size: 11.5px; color: var(--mid); flex: 1; }
+  .cr-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .cr-val.red { color: var(--rust); }
+  .cr-val.grn { color: var(--sage); }
+  .cr-val.blu { color: #1a6090; }
+  .cr-val.dim { color: #b0a898; }
+  .cr-val.warn { color: #b06020; }
+
+  /* The key insight row */
+  .insight-row {
+    padding: 7px 0;
+    margin-top: 4px;
+  }
+  .insight-label {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hourly .insight-label { color: var(--rust); }
+  .value  .insight-label { color: var(--sage); }
+  .insight-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  .hourly .insight-val { color: var(--rust); }
+  .value  .insight-val { color: var(--sage); }
+  .insight-sub { font-size: 11px; color: var(--mid); margin-top: 3px; line-height: 1.4; }
+
+  /* Bottom line */
+  .bottom-line {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
+    padding: 18px 28px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+  .bl-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    color: var(--ocean-light);
+    font-weight: 300;
+    opacity: 0.7;
+    line-height: 1;
+  }
+  .bl-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.65;
+  }
+  .bl-text strong { color: var(--ocean-light); }
+
+  /* CTA */
+  .cta-zone {
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid var(--rule);
+    background: white;
+  }
+  .cta-note {
+    font-size: 11.5px;
+    color: var(--mid);
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .cta-btn {
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 11px 22px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.1s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .cta-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* Midaire footer */
+  .widget-footer {
+    padding: 10px 32px;
+    background: var(--parchment);
+    border-top: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .wf-brand {
+    font-size: 10.5px;
+    color: var(--mid);
+    letter-spacing: 0.06em;
+  }
+  .wf-ap {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    font-weight: 600;
+  }
+
+  /* Animations */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .results.show .stake-banner  { animation: slideUp 0.35s ease 0.05s both; }
+  .results.show .comparison    { animation: slideUp 0.35s ease 0.15s both; }
+  .results.show .bottom-line   { animation: slideUp 0.35s ease 0.25s both; }
+  .results.show .cta-zone      { animation: slideUp 0.35s ease 0.32s both; }
+
+  /* Number counter animation */
+  .animating { transition: all 0.6s cubic-bezier(.4,0,.2,1); }
+
+  @media (max-width: 520px) {
+    .widget-header, .input-zone, .cta-zone, .widget-footer { padding-left: 20px; padding-right: 20px; }
+    .stake-banner { padding: 14px 20px; flex-direction: column; align-items: flex-start; }
+    .stake-desc { text-align: left; }
+    .comp-col { padding: 16px 16px; }
+    .comparison { grid-template-columns: 1fr; }
+    .comp-col.hourly { border-right: none; border-bottom: 2px solid var(--rule); }
+    .bottom-line { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="widget">
+
+  <!-- HEADER -->
+  <div class="widget-header">
+    <div class="header-eyebrow">Midaire Counsel</div>
+    <div class="header-title">What would your matter look like<br>on <em>value pricing</em>?</div>
+    <div class="header-sub">Enter what's at stake and see the difference — instantly.</div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-zone">
+    <label class="input-label" for="stakeVal">What is at stake in your matter? ($)</label>
+    <div class="input-row">
+      <div class="input-wrap">
+        <span class="input-prefix">$</span>
+        <input
+          type="number"
+          id="stakeVal"
+          class="stake-input"
+          placeholder="250,000"
+          min="1000"
+          onkeydown="if(event.key==='Enter') runWidget()"
+        >
+      </div>
+      <button class="go-btn" onclick="runWidget()">Show Me →</button>
+    </div>
+    <div class="input-hint">Enter the deal value, contract amount, claim, or potential liability — whatever number keeps you up at night.</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <!-- Stake banner -->
+    <div class="stake-banner">
+      <div>
+        <div class="stake-label">What's on the line</div>
+        <div class="stake-amount" id="r_stake">—</div>
+      </div>
+      <div class="stake-desc" id="r_stake_desc">—</div>
+    </div>
+
+    <!-- Comparison columns -->
+    <div class="comparison">
+
+      <!-- HOURLY -->
+      <div class="comp-col hourly">
+        <div class="comp-tag hourly">⚠ Hourly Billing</div>
+        <div class="comp-heading">You pay regardless<br>of outcome</div>
+
+        <div class="comp-row">
+          <span class="cr-label">Estimated fee range</span>
+          <span class="cr-val red" id="h_range">—</span>
+        </div>
+        <div class="comp-row">
+          <span class="cr-label">If matter drags on</span>
+          <span class="cr-val warn">Uncapped ↑</span>
+        </div>
+        <div class="comp-row">
+          <span class="cr-label">If outcome disappoints</span>
+          <span class="cr-val red">Full bill still owed</span>
+        </div>
+        <div class="comp-row">
+          <span class="cr-label">Attorney incentive</span>
+          <span class="cr-val dim">More hours = more pay</span>
+        </div>
+
+        <div class="insight-row">
+          <div class="insight-label">Your worst case</div>
+          <div class="insight-val" id="h_worst">—</div>
+          <div class="insight-sub">Owed before you know how it ends.</div>
+        </div>
+      </div>
+
+      <!-- VALUE -->
+      <div class="comp-col value">
+        <div class="comp-tag value">✦ Value Pricing</div>
+        <div class="comp-heading">You pay in proportion<br>to what you gain</div>
+
+        <div class="comp-row">
+          <span class="cr-label">If nothing improves</span>
+          <span class="cr-val blu" id="v_floor">—</span>
+        </div>
+        <div class="comp-row">
+          <span class="cr-label">If matter goes well</span>
+          <span class="cr-val grn" id="v_base">—</span>
+        </div>
+        <div class="comp-row">
+          <span class="cr-label">Your net in base case</span>
+          <span class="cr-val grn" id="v_net">—</span>
+        </div>
+        <div class="comp-row">
+          <span class="cr-label">Attorney incentive</span>
+          <span class="cr-val grn">Earns more when you do</span>
+        </div>
+
+        <div class="insight-row">
+          <div class="insight-label">Your worst case</div>
+          <div class="insight-val" id="v_worst">—</div>
+          <div class="insight-sub" id="v_worst_sub">—</div>
+        </div>
+      </div>
+
+    </div><!-- end comparison -->
+
+    <!-- Bottom line -->
+    <div class="bottom-line">
+      <div class="bl-icon">⚖</div>
+      <div class="bl-text" id="bl_text">—</div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-zone">
+      <div class="cta-note">This illustration uses typical estimates. Your actual engagement is priced through a conversation — where we agree on what success looks like before any work begins.</div>
+      <a class="cta-btn" href="mailto:malebrun@gmail.com?subject=AirePocket%20Inquiry">Let's Talk →</a>
+    </div>
+
+  </div><!-- end results -->
+
+  <!-- FOOTER -->
+  <div class="widget-footer">
+    <span class="wf-brand">Midaire Counsel  •  midaire.com</span>
+    <span class="wf-ap">AirePocket™ Value Pricing</span>
+  </div>
+
+</div>
+
+<script>
+function fmt(n, compact) {
+  if (!n && n !== 0) return '—';
+  const abs = Math.abs(n), s = n < 0 ? '-' : '';
+  if (compact) {
+    if (abs >= 1000000) return s + '$' + (abs/1000000).toFixed(1) + 'M';
+    if (abs >= 1000)    return s + '$' + Math.round(abs/1000) + 'K';
+    return s + '$' + Math.round(abs);
+  }
+  if (abs >= 1000000) return s + '$' + (abs/1000000).toFixed(2) + 'M';
+  return s + '$' + Math.round(abs).toLocaleString('en-US');
+}
+
+function runWidget() {
+  const stake = parseFloat(document.getElementById('stakeVal').value);
+  if (!stake || stake < 100) return;
+
+  // ── ASSUMPTIONS (illustrative, not a quote) ──────────────────────────────
+  // Hourly: typical transactional matter, $400/hr, estimate 1–3% of deal value
+  // in hours with a ±40% range
+  const hourlyRate   = 400;
+  const hoursBase    = Math.max(10, stake * 0.015 / hourlyRate);
+  const hourlyMid    = Math.round(hoursBase * hourlyRate / 100) * 100;
+  const hourlyLow    = Math.round(hourlyMid * 0.65 / 100) * 100;
+  const hourlyHigh   = Math.round(hourlyMid * 1.6 / 100) * 100;
+
+  // Value pricing: 15% fee, 5% floor of stake, base case = 60% of stake recovered/created
+  const feePct       = 0.15;
+  const floorFee     = Math.max(2500, Math.round(stake * 0.02 / 500) * 500);
+  const baseValue    = stake * 0.60;
+  const baseFee      = Math.max(floorFee, Math.round(baseValue * feePct / 500) * 500);
+  const baseNet      = Math.round((baseValue - baseFee) / 100) * 100;
+
+  // ── STAKE BANNER ──────────────────────────────────────────────────────────
+  document.getElementById('r_stake').textContent = fmt(stake);
+  document.getElementById('r_stake_desc').textContent =
+    'If this matter goes the right way, that\u2019s what\u2019s in play. Here\u2019s what each billing model means for you.';
+
+  // ── HOURLY ────────────────────────────────────────────────────────────────
+  document.getElementById('h_range').textContent  = fmt(hourlyLow, true) + ' \u2013 ' + fmt(hourlyHigh, true);
+  document.getElementById('h_worst').textContent  = fmt(hourlyMid);
+
+  // ── VALUE ─────────────────────────────────────────────────────────────────
+  document.getElementById('v_floor').textContent  = fmt(floorFee) + ' (floor only)';
+  document.getElementById('v_base').textContent   = fmt(baseFee);
+  document.getElementById('v_net').textContent    = fmt(baseNet);
+  document.getElementById('v_worst').textContent  = fmt(floorFee);
+  document.getElementById('v_worst_sub').textContent =
+    fmt(hourlyMid - floorFee) + ' less at risk than hourly billing.';
+
+  // ── BOTTOM LINE ───────────────────────────────────────────────────────────
+  const saving = hourlyMid - floorFee;
+  document.getElementById('bl_text').innerHTML =
+    'Under hourly billing, you commit <strong>' + fmt(hourlyMid) + '</strong> before knowing the outcome. ' +
+    'Under value pricing, your worst case is just <strong>' + fmt(floorFee) + '</strong> \u2014 ' +
+    'only owed if nothing improves. That\u2019s <strong>' + fmt(saving) + ' less at risk</strong>. ' +
+    'And if the matter goes as expected, you walk away <strong>' + fmt(baseNet) + ' ahead</strong> after fees.';
+
+  // ── SHOW ──────────────────────────────────────────────────────────────────
+  const results = document.getElementById('results');
+  results.classList.remove('show');
+  void results.offsetWidth; // force reflow
+  results.style.display = 'block';
+  requestAnimationFrame(() => results.classList.add('show'));
+}
+
+// Allow Enter on load
+document.getElementById('stakeVal').addEventListener('keydown', e => {
+  if (e.key === 'Enter') runWidget();
+});
+</script>
+</body>
+</html>
