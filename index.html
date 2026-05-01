@@ -563,7 +563,13 @@ function setHrly(val, btn) {
   document.getElementById('ap-hrly-out').textContent = '$' + val + '/hr';
   calcAP();
 }
-  
+ function setRetainer(val, btn) {
+  document.querySelectorAll('.sg2 .mb').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  document.getElementById('f-ret').value = val;
+  document.getElementById('f-ret-out').textContent = '$' + val.toLocaleString('en-US') + '/mo';
+  calcFGC();
+} 
 function calcAP() {
   var base  = +document.getElementById('ap-base').value;
   var imp   = +document.getElementById('ap-imp').value  / 100;
