@@ -531,32 +531,49 @@ function setMatter(m,btn){
   calcAP();
 }
 
-function calcAP(){
-  var base=+document.getElementById('ap-base').value;
-  var imp=+document.getElementById('ap-imp').value/100;
-  var fee=+document.getElementById('ap-fee').value/100;
-  var floor=+document.getElementById('ap-floor').value;
-  var hr=+document.getElementById('ap-hrly').value;
-  document.getElementById('ap-base-out').textContent='$'+base.toLocaleString();
-  document.getElementById('ap-imp-out').textContent=Math.round(imp*100)+'%';
-  document.getElementById('ap-fee-out').textContent=Math.round(fee*100)+'%';
-  document.getElementById('ap-floor-out').textContent='$'+floor.toLocaleString();
-  document.getElementById('ap-hrly-out').textContent='$'+hr+'/hr';
-  var val=Math.round(base*imp);
-  var ff=Math.max(Math.round(val*fee),floor);
-  var hf=Math.max(Math.round(val*0.5*fee),floor);
-  var net=val-ff;
-  var roi=ff>0?(net/ff).toFixed(1):'--';
-  var c=MC[CM];
-  var lo=c.hr[0],hi=c.hr[1];
-  document.getElementById('ap-r-val').textContent=fmt(val);
-  document.getElementById('ap-r-none').textContent='$'+floor.toLocaleString();
-  document.getElementById('ap-r-half').textContent=fmt(hf);
-  document.getElementById('ap-r-full').textContent=fmt(ff);
-  document.getElementById('ap-r-net').textContent=fmt(net);
-  document.getElementById('ap-r-roi').textContent=roi+'\u00d7 return on legal fee';
-  document.getElementById('ap-r-asym').innerHTML='Your worst case: <strong style="color:var(--ocean)">'+fmt(floor)+'</strong>. Hourly worst case: <strong style="color:#b83232">'+fmt(lo*hr)+'\u2013'+fmt(hi*hr)+'</strong>. Under hourly billing you pay regardless of outcome.';
-  document.getElementById('ap-r-hourly').innerHTML='~'+lo+'\u2013'+hi+' hrs at $'+hr+'/hr = <strong style="color:#b83232">'+fmt(lo*hr)+'\u2013'+fmt(hi*hr)+'</strong>, paid regardless of outcome.';
+function calcAP() {
+  var base  = +document.getElementById('ap-base').value;
+  var imp   = +document.getElementById('ap-imp').value  / 100;
+  var fee   = +document.getElementById('ap-fee').value  / 100;
+  var floor = +document.getElementById('ap-floor').value;
+  var hr    = +document.getElementById('ap-hrly').value;
+ 
+  // Update display labels
+  document.getElementById('ap-base-out').textContent  = fmt(base);
+  document.getElementById('ap-imp-out').textContent   = Math.round(imp * 100) + '%';
+  document.getElementById('ap-fee-out').textContent   = Math.round(fee * 100) + '%';
+  document.getElementById('ap-floor-out').textContent = '$' + floor.toLocaleString('en-US');
+  document.getElementById('ap-hrly-out').textContent  = '$' + hr + '/hr';
+ 
+  // Core calculations
+  var val  = Math.round(base * imp);
+  var ff   = Math.max(Math.round(val * fee), floor);        // full result fee
+  var hf   = Math.max(Math.round(val * 0.5 * fee), floor); // half result fee
+  var net  = val - ff;
+  var roi  = ff > 0 ? (net / ff).toFixed(1) : '--';
+ 
+  // Hourly range
+  var c  = MC[CM];
+  var lo = c.hr[0];
+  var hi = c.hr[1];
+ 
+  // Populate outputs
+  document.getElementById('ap-r-val').textContent  = fmt(val);
+  document.getElementById('ap-r-none').textContent = '$' + floor.toLocaleString('en-US');
+  document.getElementById('ap-r-half').textContent = fmt(hf);
+  document.getElementById('ap-r-full').textContent = fmt(ff);
+  document.getElementById('ap-r-net').textContent  = fmt(net);
+  document.getElementById('ap-r-roi').textContent  = roi + '\u00d7 return on legal fee';
+ 
+  document.getElementById('ap-r-asym').innerHTML =
+    'Your worst case: <strong style="color:var(--ocean)">' + fmt(floor) + '</strong>. ' +
+    'Hourly worst case: <strong style="color:#b83232">' + fmt(lo * hr) + '\u2013' + fmt(hi * hr) + '</strong>. ' +
+    'Under hourly billing you pay regardless of outcome.';
+ 
+  document.getElementById('ap-r-hourly').innerHTML =
+    '~' + lo + '\u2013' + hi + ' hrs at $' + hr + '/hr = ' +
+    '<strong style="color:#b83232">' + fmt(lo * hr) + '\u2013' + fmt(hi * hr) + '</strong>' +
+    ', paid regardless of outcome.';
 }
 calcAP();
 </script>
