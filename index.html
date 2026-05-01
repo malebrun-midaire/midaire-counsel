@@ -320,7 +320,19 @@ footer p{font-size:11px;color:rgba(255,255,255,0.22);letter-spacing:0.04em;max-w
           <div class="sg2"><div class="sr"><span class="sl2" id="ap-imp-lbl">Expected Value Improvement</span><span class="sv" id="ap-imp-out">15%</span></div><input type="range" id="ap-imp" min="5" max="50" step="1" value="15" oninput="calcAP()"><div class="srange"><span>5%</span><span>50%</span></div></div>
           <div class="sg2"><div class="sr"><span class="sl2">AirePocket Fee %</span><span class="sv" id="ap-fee-out">20%</span></div><input type="range" id="ap-fee" min="10" max="40" step="1" value="20" oninput="calcAP()"><div class="srange"><span>10%</span><span>40%</span></div></div>
           <div class="sg2"><div class="sr"><span class="sl2">Minimum Floor Fee</span><span class="sv" id="ap-floor-out">$5,000</span></div><input type="range" id="ap-floor" min="1000" max="25000" step="500" value="5000" oninput="calcAP()"><div class="srange"><span>$1K</span><span>$25K</span></div></div>
-          <div class="sg2"><div class="sr"><span class="sl2">Hourly Rate (comparison)</span><span class="sv" id="ap-hrly-out">$450/hr</span></div><input type="range" id="ap-hrly" min="200" max="750" step="25" value="450" oninput="calcAP()"><div class="srange"><span>$200</span><span>$750</span></div></div>
+         <div class="sg2">
+   <div class="sr">
+    <span class="sl2">Hourly Rate (comparison)</span>
+    <span class="sv" id="ap-hrly-out">$400/hr</span>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:4px;">
+    <button class="mb on" onclick="setHrly(300,this)">$300/hr<br><span style="font-size:10px;font-weight:300;opacity:0.7">Regional firm</span></button>
+    <button class="mb" onclick="setHrly(400,this)">$400/hr<br><span style="font-size:10px;font-weight:300;opacity:0.7">Boutique</span></button>
+    <button class="mb" onclick="setHrly(500,this)">$500/hr<br><span style="font-size:10px;font-weight:300;opacity:0.7">Mid-market</span></button>
+    <button class="mb" onclick="setHrly(650,this)">$650/hr<br><span style="font-size:10px;font-weight:300;opacity:0.7">BigLaw</span></button>
+  </div>
+  <input type="hidden" id="ap-hrly" value="400">
+</div>
         </div>
         <div>
           <div class="rc rcg" style="margin-bottom:1px"><div class="rl" id="ap-val-lbl">Value Created for Client</div><div class="rv rvn" id="ap-r-val">$750,000</div></div>
@@ -530,7 +542,14 @@ function setMatter(m,btn){
   document.getElementById('ap-val-lbl').textContent=c.vl;
   calcAP();
 }
-
+function setHrly(val, btn) {
+  document.querySelectorAll('.sg2 .mb').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  document.getElementById('ap-hrly').value = val;
+  document.getElementById('ap-hrly-out').textContent = '$' + val + '/hr';
+  calcAP();
+}
+  
 function calcAP() {
   var base  = +document.getElementById('ap-base').value;
   var imp   = +document.getElementById('ap-imp').value  / 100;
