@@ -294,7 +294,19 @@ footer p{font-size:11px;color:rgba(255,255,255,0.22);letter-spacing:0.04em;max-w
           <div class="sg2"><div class="sr"><span class="sl2">Benefits &amp; Overhead Multiplier</span><span class="sv" id="f-mult-out">35%</span></div><input type="range" id="f-mult" min="20" max="60" step="5" value="35" oninput="calcFGC()"><div class="srange"><span>20%</span><span>60%</span></div></div>
           <div class="sg2"><div class="sr"><span class="sl2">Outside Counsel Hourly Rate</span><span class="sv" id="f-hr-out">$450/hr</span></div><input type="range" id="f-hr" min="200" max="750" step="25" value="450" oninput="calcFGC()"><div class="srange"><span>$200</span><span>$750</span></div></div>
           <div class="sg2"><div class="sr"><span class="sl2">Estimated Annual Legal Hours</span><span class="sv" id="f-hrs-out">400 hrs</span></div><input type="range" id="f-hrs" min="100" max="1200" step="50" value="400" oninput="calcFGC()"><div class="srange"><span>100</span><span>1,200</span></div></div>
-          <div class="sg2"><div class="sr"><span class="sl2">Monthly Fractional Retainer</span><span class="sv" id="f-ret-out">$5,000/mo</span></div><input type="range" id="f-ret" min="2000" max="12000" step="500" value="5000" oninput="calcFGC()"><div class="srange"><span>$2K</span><span>$12K</span></div></div>
+        <div class="sg2">
+  <div class="sr">
+    <span class="sl2">Fractional GC Tier</span>
+    <span class="sv" id="f-ret-out">$3,000/mo</span>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;">
+    <button class="mb" onclick="setRetainer(750,this)">On Call<br><span style="font-size:10px;font-weight:300;opacity:0.7">$750/mo</span></button>
+    <button class="mb on" onclick="setRetainer(3000,this)">Essential<br><span style="font-size:10px;font-weight:300;opacity:0.7">$3,000/mo</span></button>
+    <button class="mb" onclick="setRetainer(6000,this)">Advisory<br><span style="font-size:10px;font-weight:300;opacity:0.7">$6,000/mo</span></button>
+    <button class="mb" onclick="setRetainer(9500,this)">Priority<br><span style="font-size:10px;font-weight:300;opacity:0.7">$9,500/mo</span></button>
+  </div>
+  <input type="hidden" id="f-ret" value="3000">
+</div>
         </div>
         <div class="rs">
           <div class="rc rcg"><div class="rl">Full-Time GC. Total Annual Cost</div><div class="rv rvr" id="f-r-full">$304,000</div><div class="rn">Salary + benefits + overhead. Excludes $20&ndash;40K recruiting cost.</div></div>
