@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estate Planning Intake — Midaire Counsel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root {
+    --navy: #1a2540;
+    --gold: #b8975a;
+    --gold-light: #d4b483;
+    --cream: #f8f5ef;
+    --warm-white: #fdfaf5;
+    --slate: #4a5568;
+    --light-slate: #8898aa;
+    --border: #e2d9c8;
+    --error: #c0392b;
+    --success: #2d6a4f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--navy);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--gold);
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--warm-white);
+    letter-spacing: 0.02em;
+  }
+  .logo span { color: var(--gold); }
+  .header-tag {
+    font-size: 0.72rem;
+    color: var(--gold-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    background: var(--navy);
+    padding: 0 40px 20px;
+  }
+  .progress-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .step-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+  }
+  .step-circle {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--light-slate);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--light-slate);
+    transition: all 0.3s;
+    background: transparent;
+  }
+  .step-circle.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(184,151,90,0.1);
+  }
+  .step-circle.done {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: var(--navy);
+  }
+  .step-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--light-slate);
+    white-space: nowrap;
+  }
+  .step-label.active { color: var(--gold); }
+  .step-line {
+    flex: 1;
+    height: 1px;
+    background: var(--light-slate);
+    margin-bottom: 18px;
+    transition: background 0.3s;
+  }
+  .step-line.done { background: var(--gold); }
+
+  /* ── PAGE CONTAINER ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .page-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 50px 30px 80px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.1rem;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .page-subtitle {
+    font-size: 0.9rem;
+    color: var(--slate);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 580px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── FORM ELEMENTS ── */
+  .field-group {
+    margin-bottom: 22px;
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .field-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  label .req { color: var(--gold); margin-left: 2px; }
+  label .hint {
+    font-weight: 300;
+    color: var(--slate);
+    font-size: 0.75rem;
+    display: block;
+    margin-top: 2px;
+    letter-spacing: 0;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--navy);
+    background: var(--warm-white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184,151,90,0.12);
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5568' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  /* Radio / Checkbox cards */
+  .radio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .radio-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .radio-card {
+    position: relative;
+  }
+  .radio-card input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .radio-card label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    background: var(--warm-white);
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--slate);
+    line-height: 1.4;
+  }
+  .radio-card input:checked + label {
+    border-color: var(--gold);
+    background: rgba(184,151,90,0.07);
+    color: var(--navy);
+    font-weight: 500;
+  }
+  .radio-card label::before {
+    content: '';
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .radio-card input:checked + label::before {
+    border-color: var(--gold);
+    background: var(--gold);
+    box-shadow: inset 0 0 0 3px var(--warm-white);
+  }
+  .check-card label::before {
+    border-radius: 3px;
+  }
+  .check-card input:checked + label::before {
+    background: var(--gold);
+    border-color: var(--gold);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* ── CONDITIONAL SECTIONS ── */
+  .conditional { display: none; }
+  .conditional.visible { display: block; }
+
+  /* ── BUTTONS ── */
+  .btn-row {
+    display: flex;
+    gap: 14px;
+    margin-top: 40px;
+    align-items: center;
+  }
+  .btn-primary {
+    background: var(--navy);
+    color: var(--warm-white);
+    border: none;
+    padding: 13px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: #253660; }
+  .btn-primary.gold {
+    background: var(--gold);
+    color: var(--navy);
+  }
+  .btn-primary.gold:hover { background: var(--gold-light); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--slate);
+    border: 1px solid var(--border);
+    padding: 13px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* ── CALLOUT BOXES ── */
+  .info-box {
+    background: rgba(184,151,90,0.08);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    margin: 24px 0;
+    font-size: 0.84rem;
+    color: var(--slate);
+    line-height: 1.6;
+    border-radius: 0 4px 4px 0;
+  }
+  .info-box strong { color: var(--navy); }
+
+  /* ── SPOUSE/PARTNER SECTION ── */
+  .partner-toggle { margin-bottom: 30px; }
+
+  /* ── ASSET TABLE ── */
+  .asset-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  .asset-table th {
+    background: var(--navy);
+    color: var(--gold-light);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 400;
+  }
+  .asset-table td { padding: 0; border-bottom: 1px solid var(--border); }
+  .asset-table td input, .asset-table td select {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    padding: 10px 12px;
+    font-size: 0.83rem;
+  }
+  .asset-table td input:focus, .asset-table td select:focus {
+    background: rgba(184,151,90,0.06);
+    box-shadow: none;
+  }
+  .asset-table tr:hover td { background: rgba(248,245,239,0.8); }
+  .add-row-btn {
+    background: none;
+    border: 1px dashed var(--border);
+    color: var(--gold);
+    font-size: 0.8rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-top: 8px;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .add-row-btn:hover { border-color: var(--gold); }
+  .remove-row-btn {
+    background: none;
+    border: none;
+    color: var(--light-slate);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 8px;
+    line-height: 1;
+  }
+  .remove-row-btn:hover { color: var(--error); }
+
+  /* ── STATUS MESSAGES ── */
+  .status-msg {
+    padding: 14px 18px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-top: 20px;
+    display: none;
+  }
+  .status-msg.error { background: #fdf0f0; border: 1px solid #e5b4b4; color: var(--error); }
+  .status-msg.success { background: #f0faf4; border: 1px solid #a8d5bb; color: var(--success); }
+  .status-msg.visible { display: block; }
+
+  /* ── CONFIRMATION PAGE ── */
+  .confirm-wrap {
+    text-align: center;
+    padding: 80px 30px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .confirm-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(184,151,90,0.15);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    font-size: 1.8rem;
+  }
+  .confirm-wrap h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 14px;
+  }
+  .confirm-wrap p {
+    font-size: 0.9rem;
+    color: var(--slate);
+    line-height: 1.7;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .site-header { padding: 16px 20px; }
+    .progress-wrap { padding: 0 20px 16px; }
+    .page-inner { padding: 30px 20px 60px; }
+    .field-row, .field-row-3 { grid-template-columns: 1fr; }
+    .radio-grid { grid-template-columns: 1fr; }
+    .radio-grid.cols-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ── FADE ANIMATION ── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .page.active { animation: fadeIn 0.35s ease; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">Midaire <span>Counsel</span></div>
+  <div class="header-tag">Estate Planning Intake</div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-steps">
+    <div class="step-node">
+      <div class="step-circle active" id="sc1">1</div>
+      <div class="step-label active" id="sl1">Qualifier</div>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-node">
+      <div class="step-circle" id="sc2">2</div>
+      <div class="step-label" id="sl2">Contact</div>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-node">
+      <div class="step-circle" id="sc3">3</div>
+      <div class="step-label" id="sl3">Family</div>
+    </div>
+    <div class="step-line" id="line3"></div>
+    <div class="step-node">
+      <div class="step-circle" id="sc4">4</div>
+      <div class="step-label" id="sl4">Assets</div>
+    </div>
+    <div class="step-line" id="line4"></div>
+    <div class="step-node">
+      <div class="step-circle" id="sc5">5</div>
+      <div class="step-label" id="sl5">Wishes</div>
+    </div>
+    <div class="step-line" id="line5"></div>
+    <div class="step-node">
+      <div class="step-circle" id="sc6">6</div>
+      <div class="step-label" id="sl6">Agents</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 1 — TOW-Q QUALIFIER
+═══════════════════════════════════════════════ -->
+<div class="page active" id="page1">
+<div class="page-inner">
+  <div class="page-title">Trust or Will Qualifier</div>
+  <p class="page-subtitle">Please answer the following questions as accurately as you can. There are no right or wrong answers — this helps us prepare the right documents for your situation. You can call us at any time if a question is unclear.</p>
+
+  <div class="info-box"><strong>Confidential.</strong> This information is protected by attorney-client privilege and will be reviewed only by Midaire Counsel attorneys and staff.</div>
+
+  <div class="section-label">Section A — Your Situation Today</div>
+
+  <div class="field-group">
+    <label>What best describes your current status? <span class="req">*</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="marital" id="m1" value="single"><label for="m1">Single, never married</label></div>
+      <div class="radio-card"><input type="radio" name="marital" id="m2" value="married_first"><label for="m2">Married — first marriage</label></div>
+      <div class="radio-card"><input type="radio" name="marital" id="m3" value="married_subsequent"><label for="m3">Married — subsequent marriage</label></div>
+      <div class="radio-card"><input type="radio" name="marital" id="m4" value="divorced"><label for="m4">Divorced</label></div>
+      <div class="radio-card"><input type="radio" name="marital" id="m5" value="widowed"><label for="m5">Widowed</label></div>
+      <div class="radio-card"><input type="radio" name="marital" id="m6" value="partnered"><label for="m6">Domestic partner / long-term partner</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Do you have children? <span class="req">*</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="has_children" id="ch0" value="none"><label for="ch0">No children</label></div>
+      <div class="radio-card"><input type="radio" name="has_children" id="ch1" value="all_joint"><label for="ch1">Yes — all children are from this marriage / relationship</label></div>
+      <div class="radio-card"><input type="radio" name="has_children" id="ch2" value="prior_children"><label for="ch2">Yes — I have children from a prior relationship</label></div>
+      <div class="radio-card"><input type="radio" name="has_children" id="ch3" value="mixed"><label for="ch3">Yes — both prior and current relationship</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Do you have any stepchildren — children of your current spouse/partner who are not legally yours? <span class="req">*</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="stepchildren" id="step1" value="yes"><label for="step1">Yes</label></div>
+      <div class="radio-card"><input type="radio" name="stepchildren" id="step2" value="no"><label for="step2">No</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Do you have any beneficiaries with special needs, disabilities, or who receive government benefits (SSI, Medicaid, etc.)? <span class="req">*</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="special_needs" id="sn1" value="yes"><label for="sn1">Yes</label></div>
+      <div class="radio-card"><input type="radio" name="special_needs" id="sn2" value="no"><label for="sn2">No</label></div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+  <div class="section-label">Section B — Your Property</div>
+
+  <div class="field-group">
+    <label>Do you own real estate other than your primary residence? <span class="req">*</span><span class="hint">Rental property, vacation home, timeshare, land, commercial property</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="other_realty" id="or1" value="yes"><label for="or1">Yes</label></div>
+      <div class="radio-card"><input type="radio" name="other_realty" id="or2" value="no"><label for="or2">No</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Do you own real estate in more than one state? <span class="req">*</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="multi_state" id="ms1" value="yes"><label for="ms1">Yes</label></div>
+      <div class="radio-card"><input type="radio" name="multi_state" id="ms2" value="no"><label for="ms2">No</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Did you inherit any property — real estate, investments, family business interest, or other assets? <span class="req">*</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="inherited" id="inh1" value="yes"><label for="inh1">Yes</label></div>
+      <div class="radio-card"><input type="radio" name="inherited" id="inh2" value="no"><label for="inh2">No</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Do you own all or part of a business? <span class="req">*</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="business_interest" id="bi1" value="yes"><label for="bi1">Yes</label></div>
+      <div class="radio-card"><input type="radio" name="business_interest" id="bi2" value="no"><label for="bi2">No</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>What is your best estimate of the total value of everything you own — real estate, investments, retirement accounts, life insurance, business interests, personal property? <span class="req">*</span></label>
+    <div class="radio-grid cols-3">
+      <div class="radio-card"><input type="radio" name="estate_value" id="ev1" value="under1m"><label for="ev1">Under $1 million</label></div>
+      <div class="radio-card"><input type="radio" name="estate_value" id="ev2" value="1m_5m"><label for="ev2">$1M – $5M</label></div>
+      <div class="radio-card"><input type="radio" name="estate_value" id="ev3" value="5m_15m"><label for="ev3">$5M – $15M</label></div>
+      <div class="radio-card"><input type="radio" name="estate_value" id="ev4" value="over15m"><label for="ev4">Over $15M</label></div>
+      <div class="radio-card"><input type="radio" name="estate_value" id="ev5" value="unsure"><label for="ev5">Not sure</label></div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+  <div class="section-label">Section C — Planning Concerns</div>
+
+  <div class="field-group">
+    <label>Are you concerned about what would happen if you became incapacitated — unable to manage your own finances or healthcare decisions — before you pass away? <span class="req">*</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="incapacity" id="inc1" value="yes"><label for="inc1">Yes, this is important to me</label></div>
+      <div class="radio-card"><input type="radio" name="incapacity" id="inc2" value="no"><label for="inc2">Not a primary concern right now</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Is privacy important to you — specifically, do you want to keep the details of your estate out of public court records? <span class="req">*</span><span class="hint">Wills become public record when probated. Trusts generally do not.</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="privacy" id="priv1" value="yes"><label for="priv1">Yes, I prefer privacy</label></div>
+      <div class="radio-card"><input type="radio" name="privacy" id="priv2" value="no"><label for="priv2">Not a concern</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Do you anticipate that anyone might challenge or contest your estate plan? <span class="req">*</span><span class="hint">Estranged family members, prior marriages, expected disputes</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="contest_risk" id="cr1" value="yes"><label for="cr1">Possibly yes</label></div>
+      <div class="radio-card"><input type="radio" name="contest_risk" id="cr2" value="no"><label for="cr2">No</label></div>
+      <div class="radio-card"><input type="radio" name="contest_risk" id="cr3" value="unsure"><label for="cr3">Not sure</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Do you want to place any conditions or restrictions on how beneficiaries receive their inheritance? <span class="req">*</span><span class="hint">Example: a child receives funds only at age 30, or only for education</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="conditions" id="cond1" value="yes"><label for="cond1">Yes</label></div>
+      <div class="radio-card"><input type="radio" name="conditions" id="cond2" value="no"><label for="cond2">No</label></div>
+      <div class="radio-card"><input type="radio" name="conditions" id="cond3" value="unsure"><label for="cond3">Not sure / want to discuss</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Is there anything else about your family situation or wishes that you think we should know before our first meeting?</label>
+    <textarea name="tow_notes" id="tow_notes" placeholder="Optional — use this space freely. Nothing here is binding."></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary gold" onclick="goToPage(2)">Continue to Personal Inventory →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 2 — CONTACT INFORMATION
+═══════════════════════════════════════════════ -->
+<div class="page" id="page2">
+<div class="page-inner">
+  <div class="page-title">Contact Information</div>
+  <p class="page-subtitle">We'll use this information to prepare your documents. Please be precise — legal names, full addresses, and accurate dates matter.</p>
+
+  <div class="section-label">Primary Client</div>
+
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Legal First Name <span class="req">*</span></label>
+      <input type="text" id="p1_first" placeholder="As it appears on your ID">
+    </div>
+    <div class="field-group">
+      <label>Middle Name</label>
+      <input type="text" id="p1_middle">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Legal Last Name <span class="req">*</span></label>
+      <input type="text" id="p1_last">
+    </div>
+    <div class="field-group">
+      <label>Suffix</label>
+      <select id="p1_suffix">
+        <option value="">None</option>
+        <option>Jr.</option><option>Sr.</option><option>II</option><option>III</option><option>IV</option><option>Esq.</option>
+      </select>
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Date of Birth <span class="req">*</span></label>
+      <input type="date" id="p1_dob">
+    </div>
+    <div class="field-group">
+      <label>State of Birth</label>
+      <input type="text" id="p1_birth_state" placeholder="State or country">
+    </div>
+  </div>
+  <div class="field-group">
+    <label>Home Address (Street) <span class="req">*</span></label>
+    <input type="text" id="p1_street">
+  </div>
+  <div class="field-row-3 field-group">
+    <div class="field-group">
+      <label>City <span class="req">*</span></label>
+      <input type="text" id="p1_city">
+    </div>
+    <div class="field-group">
+      <label>State <span class="req">*</span></label>
+      <input type="text" id="p1_state" maxlength="2" placeholder="GA">
+    </div>
+    <div class="field-group">
+      <label>ZIP <span class="req">*</span></label>
+      <input type="text" id="p1_zip" maxlength="10">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Email Address <span class="req">*</span></label>
+      <input type="email" id="p1_email">
+    </div>
+    <div class="field-group">
+      <label>Mobile Phone <span class="req">*</span></label>
+      <input type="tel" id="p1_phone" placeholder="(___) ___-____">
+    </div>
+  </div>
+
+  <!-- SPOUSE/PARTNER CONDITIONAL -->
+  <hr class="section-divider">
+  <div id="spouse_section">
+    <div class="section-label">Spouse / Partner</div>
+    <div class="info-box">If you are filing jointly as a couple, please complete this section. Both people will be named as co-grantors or co-testators in your documents.</div>
+
+    <div class="field-group partner-toggle">
+      <label>Are you completing this as a couple?</label>
+      <div class="radio-grid">
+        <div class="radio-card"><input type="radio" name="is_couple" id="cp1" value="yes" onchange="toggleSpouse(true)"><label for="cp1">Yes — joint filing</label></div>
+        <div class="radio-card"><input type="radio" name="is_couple" id="cp2" value="no" onchange="toggleSpouse(false)" checked><label for="cp2">No — individual filing</label></div>
+      </div>
+    </div>
+
+    <div class="conditional" id="spouse_fields">
+      <div class="field-row field-group">
+        <div class="field-group">
+          <label>Legal First Name <span class="req">*</span></label>
+          <input type="text" id="p2_first">
+        </div>
+        <div class="field-group">
+          <label>Middle Name</label>
+          <input type="text" id="p2_middle">
+        </div>
+      </div>
+      <div class="field-row field-group">
+        <div class="field-group">
+          <label>Legal Last Name <span class="req">*</span></label>
+          <input type="text" id="p2_last">
+        </div>
+        <div class="field-group">
+          <label>Suffix</label>
+          <select id="p2_suffix">
+            <option value="">None</option>
+            <option>Jr.</option><option>Sr.</option><option>II</option><option>III</option><option>IV</option><option>Esq.</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row field-group">
+        <div class="field-group">
+          <label>Date of Birth <span class="req">*</span></label>
+          <input type="date" id="p2_dob">
+        </div>
+        <div class="field-group">
+          <label>State of Birth</label>
+          <input type="text" id="p2_birth_state">
+        </div>
+      </div>
+      <div class="field-row field-group">
+        <div class="field-group">
+          <label>Email Address</label>
+          <input type="email" id="p2_email">
+        </div>
+        <div class="field-group">
+          <label>Mobile Phone</label>
+          <input type="tel" id="p2_phone" placeholder="(___) ___-____">
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Date of Marriage / Partnership</label>
+        <input type="date" id="marriage_date" style="max-width:220px;">
+      </div>
+      <div class="field-group">
+        <label>State where married / domestic partnership registered</label>
+        <input type="text" id="marriage_state" maxlength="2" placeholder="GA" style="max-width:100px;">
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="goToPage(1)">← Back</button>
+    <button class="btn-primary gold" onclick="goToPage(3)">Continue: Family →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 3 — FAMILY / BENEFICIARIES
+═══════════════════════════════════════════════ -->
+<div class="page" id="page3">
+<div class="page-inner">
+  <div class="page-title">Family &amp; Beneficiaries</div>
+  <p class="page-subtitle">List your children, stepchildren, and any other primary beneficiaries. We also need to know about any prior marriages or domestic partnerships.</p>
+
+  <div class="section-label">Children</div>
+  <div class="info-box">Include all children — biological, adopted, and stepchildren. If a child is deceased, please note that in the relationship column.</div>
+
+  <table class="asset-table" id="children_table">
+    <thead>
+      <tr>
+        <th>Full Legal Name</th>
+        <th>Date of Birth</th>
+        <th>Relationship</th>
+        <th>State of Residence</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="children_body">
+      <tr>
+        <td><input type="text" placeholder="First Middle Last"></td>
+        <td><input type="date"></td>
+        <td>
+          <select>
+            <option value="">Select</option>
+            <option>Biological — joint</option>
+            <option>Biological — my prior relationship</option>
+            <option>Biological — spouse's prior relationship</option>
+            <option>Adopted</option>
+            <option>Stepchild (not adopted)</option>
+            <option>Deceased</option>
+          </select>
+        </td>
+        <td><input type="text" maxlength="2" placeholder="GA"></td>
+        <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" onclick="addChildRow()">+ Add Child</button>
+
+  <hr class="section-divider">
+  <div class="section-label">Prior Marriages or Domestic Partnerships</div>
+
+  <div class="field-group">
+    <label>Have either of you been previously married or in a registered domestic partnership?</label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="prior_marriage" id="pm1" value="yes" onchange="showEl('prior_marriage_fields')"><label for="pm1">Yes</label></div>
+      <div class="radio-card"><input type="radio" name="prior_marriage" id="pm2" value="no" onchange="hideEl('prior_marriage_fields')" checked><label for="pm2">No</label></div>
+    </div>
+  </div>
+
+  <div class="conditional" id="prior_marriage_fields">
+    <table class="asset-table" id="prior_table">
+      <thead><tr><th>Who</th><th>Former Spouse Name</th><th>How Ended</th><th>Year Ended</th><th>State</th><th></th></tr></thead>
+      <tbody id="prior_body">
+        <tr>
+          <td>
+            <select>
+              <option>Primary client</option>
+              <option>Spouse / Partner</option>
+            </select>
+          </td>
+          <td><input type="text" placeholder="Full name"></td>
+          <td>
+            <select>
+              <option>Divorce</option>
+              <option>Death</option>
+              <option>Annulment</option>
+            </select>
+          </td>
+          <td><input type="text" maxlength="4" placeholder="Year"></td>
+          <td><input type="text" maxlength="2" placeholder="GA"></td>
+          <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="add-row-btn" onclick="addPriorRow()">+ Add Prior Marriage</button>
+  </div>
+
+  <hr class="section-divider">
+  <div class="section-label">Other Key Beneficiaries</div>
+  <p style="font-size:0.84rem;color:var(--slate);margin-bottom:16px;line-height:1.6;">List any other individuals you intend to name as primary or contingent beneficiaries (parents, siblings, charities, etc.).</p>
+
+  <table class="asset-table" id="bene_table">
+    <thead><tr><th>Full Name</th><th>Relationship</th><th>City / State</th><th>Notes</th><th></th></tr></thead>
+    <tbody id="bene_body">
+      <tr>
+        <td><input type="text"></td>
+        <td><input type="text" placeholder="Parent, sibling, charity…"></td>
+        <td><input type="text"></td>
+        <td><input type="text" placeholder="Optional"></td>
+        <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" onclick="addBeneRow()">+ Add Beneficiary</button>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="goToPage(2)">← Back</button>
+    <button class="btn-primary gold" onclick="goToPage(4)">Continue: Assets →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 4 — ASSET INVENTORY
+═══════════════════════════════════════════════ -->
+<div class="page" id="page4">
+<div class="page-inner">
+  <div class="page-title">Asset Inventory</div>
+  <p class="page-subtitle">Be as complete as you can. You don't need exact values — reasonable estimates are fine. We need to know what exists so we can plan properly.</p>
+
+  <div class="section-label">Real Estate</div>
+  <table class="asset-table">
+    <thead><tr><th>Property Address</th><th>State</th><th>How Titled</th><th>Approx. Value</th><th>Mortgage Balance</th><th></th></tr></thead>
+    <tbody id="realty_body">
+      <tr>
+        <td><input type="text" placeholder="Street, City"></td>
+        <td><input type="text" maxlength="2" placeholder="GA"></td>
+        <td>
+          <select>
+            <option value="">How titled</option>
+            <option>My name alone</option>
+            <option>Joint tenants w/ right of survivorship</option>
+            <option>Tenants in common</option>
+            <option>In a trust</option>
+            <option>In an LLC / entity</option>
+            <option>Inherited — not yet retitled</option>
+            <option>Unsure</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="$"></td>
+        <td><input type="text" placeholder="$ or None"></td>
+        <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" onclick="addRealtyRow()">+ Add Property</button>
+
+  <hr class="section-divider">
+  <div class="section-label">Bank &amp; Investment Accounts</div>
+  <table class="asset-table">
+    <thead><tr><th>Institution</th><th>Account Type</th><th>Approx. Balance</th><th>Beneficiary Designated?</th><th></th></tr></thead>
+    <tbody id="accounts_body">
+      <tr>
+        <td><input type="text" placeholder="Bank / Brokerage name"></td>
+        <td>
+          <select>
+            <option value="">Type</option>
+            <option>Checking</option><option>Savings</option><option>Brokerage / Investment</option>
+            <option>Money Market</option><option>CD</option><option>Crypto</option><option>Other</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="$"></td>
+        <td>
+          <select>
+            <option value="">?</option>
+            <option>Yes</option><option>No</option><option>Unsure</option>
+          </select>
+        </td>
+        <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" onclick="addAccountRow()">+ Add Account</button>
+
+  <hr class="section-divider">
+  <div class="section-label">Retirement Accounts</div>
+  <table class="asset-table">
+    <thead><tr><th>Institution</th><th>Account Type</th><th>Approx. Balance</th><th>Primary Beneficiary</th><th></th></tr></thead>
+    <tbody id="retirement_body">
+      <tr>
+        <td><input type="text"></td>
+        <td>
+          <select>
+            <option value="">Type</option>
+            <option>401(k)</option><option>403(b)</option><option>IRA (Traditional)</option>
+            <option>IRA (Roth)</option><option>SEP-IRA</option><option>Pension</option><option>Other</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="$"></td>
+        <td><input type="text" placeholder="Name on file"></td>
+        <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" onclick="addRetirementRow()">+ Add Retirement Account</button>
+
+  <hr class="section-divider">
+  <div class="section-label">Life Insurance</div>
+  <table class="asset-table">
+    <thead><tr><th>Insurance Company</th><th>Policy Type</th><th>Death Benefit</th><th>Primary Beneficiary</th><th></th></tr></thead>
+    <tbody id="insurance_body">
+      <tr>
+        <td><input type="text"></td>
+        <td>
+          <select>
+            <option value="">Type</option>
+            <option>Term</option><option>Whole Life</option><option>Universal Life</option>
+            <option>Group / Employer</option><option>Other</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="$"></td>
+        <td><input type="text" placeholder="Name on file"></td>
+        <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" onclick="addInsuranceRow()">+ Add Policy</button>
+
+  <hr class="section-divider">
+  <div class="section-label">Business Interests</div>
+  <table class="asset-table">
+    <thead><tr><th>Business Name</th><th>Entity Type</th><th>Your Ownership %</th><th>State of Formation</th><th>Approx. Value</th><th></th></tr></thead>
+    <tbody id="business_body">
+      <tr>
+        <td><input type="text"></td>
+        <td>
+          <select>
+            <option value="">Type</option>
+            <option>LLC</option><option>S-Corp</option><option>C-Corp</option>
+            <option>Partnership</option><option>Sole Proprietorship</option><option>Other</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="%" maxlength="6"></td>
+        <td><input type="text" maxlength="2" placeholder="GA"></td>
+        <td><input type="text" placeholder="$"></td>
+        <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" onclick="addBusinessRow()">+ Add Business Interest</button>
+
+  <hr class="section-divider">
+  <div class="section-label">Vehicles &amp; Other Titled Personal Property</div>
+  <table class="asset-table">
+    <thead><tr><th>Description</th><th>Year / Make / Model</th><th>Approx. Value</th><th>How Titled</th><th></th></tr></thead>
+    <tbody id="vehicles_body">
+      <tr>
+        <td><input type="text" placeholder="Car, boat, RV, aircraft…"></td>
+        <td><input type="text"></td>
+        <td><input type="text" placeholder="$"></td>
+        <td>
+          <select>
+            <option>My name alone</option><option>Joint</option><option>Spouse only</option>
+          </select>
+        </td>
+        <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" onclick="addVehicleRow()">+ Add Vehicle / Property</button>
+
+  <hr class="section-divider">
+  <div class="section-label">Digital &amp; Other Assets</div>
+  <div class="info-box"><strong>Digital assets</strong> — online accounts, cryptocurrency wallets, domain names, intellectual property, royalty streams — are frequently overlooked in estate planning. Please list anything of value that exists primarily online or digitally.</div>
+  <table class="asset-table">
+    <thead><tr><th>Description</th><th>Platform / Institution</th><th>Approx. Value</th><th>Notes</th><th></th></tr></thead>
+    <tbody id="digital_body">
+      <tr>
+        <td><input type="text" placeholder="Crypto, domain, IP royalty…"></td>
+        <td><input type="text"></td>
+        <td><input type="text" placeholder="$"></td>
+        <td><input type="text" placeholder="Location of credentials, etc."></td>
+        <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" onclick="addDigitalRow()">+ Add Digital Asset</button>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="goToPage(3)">← Back</button>
+    <button class="btn-primary gold" onclick="goToPage(5)">Continue: Wishes →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 5 — DISTRIBUTION WISHES
+═══════════════════════════════════════════════ -->
+<div class="page" id="page5">
+<div class="page-inner">
+  <div class="page-title">Distribution &amp; Final Wishes</div>
+  <p class="page-subtitle">How do you want your estate distributed? These are your instructions — we will draft language to carry them out. You are not bound by anything you write here; we'll refine it together.</p>
+
+  <div class="section-label">Primary Distribution</div>
+
+  <div class="field-group">
+    <label>How do you want your estate distributed at your death? <span class="req">*</span><span class="hint">Describe your general intent. We'll work out the mechanics.</span></label>
+    <textarea id="dist_primary" rows="4" placeholder="Example: Everything to my spouse, and if my spouse does not survive me, equally to my children. / Everything equally to my three children."></textarea>
+  </div>
+
+  <div class="field-group">
+    <label>What happens if a beneficiary predeceases you? <span class="req">*</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="predecease" id="pd1" value="per_stirpes"><label for="pd1">Their share passes to their children (per stirpes)</label></div>
+      <div class="radio-card"><input type="radio" name="predecease" id="pd2" value="survivors"><label for="pd2">Their share is divided among surviving beneficiaries</label></div>
+      <div class="radio-card"><input type="radio" name="predecease" id="pd3" value="discuss"><label for="pd3">I want to discuss this</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Are there specific assets you want to leave to specific people or organizations?<span class="hint">Example: my grandmother's jewelry to my daughter; the lake house to my son</span></label>
+    <textarea id="dist_specific" rows="3" placeholder="List any specific bequests here. Leave blank if you want everything pooled."></textarea>
+  </div>
+
+  <div class="field-group">
+    <label>Do you want to make any charitable gifts at death?</label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="charity" id="char1" value="yes" onchange="showEl('charity_detail')"><label for="char1">Yes</label></div>
+      <div class="radio-card"><input type="radio" name="charity" id="char2" value="no" onchange="hideEl('charity_detail')" checked><label for="char2">No</label></div>
+    </div>
+  </div>
+  <div class="conditional field-group" id="charity_detail">
+    <label>Charitable Gifts</label>
+    <textarea id="charity_desc" rows="2" placeholder="Organization name(s), amount or percentage of estate, purpose if restricted"></textarea>
+  </div>
+
+  <div class="field-group">
+    <label>If you have minor children at the time of your death, at what age (or ages) should they receive their inheritance outright?</label>
+    <div class="radio-grid cols-3">
+      <div class="radio-card"><input type="radio" name="minor_age" id="ma1" value="18"><label for="ma1">18 — as adults</label></div>
+      <div class="radio-card"><input type="radio" name="minor_age" id="ma2" value="21"><label for="ma2">21</label></div>
+      <div class="radio-card"><input type="radio" name="minor_age" id="ma3" value="25"><label for="ma3">25</label></div>
+      <div class="radio-card"><input type="radio" name="minor_age" id="ma4" value="30"><label for="ma4">30</label></div>
+      <div class="radio-card"><input type="radio" name="minor_age" id="ma5" value="staged"><label for="ma5">Staged (e.g., 1/3 at 25, remainder at 30)</label></div>
+      <div class="radio-card"><input type="radio" name="minor_age" id="ma6" value="na"><label for="ma6">No minor children / N/A</label></div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+  <div class="section-label">Guardian for Minor Children</div>
+
+  <div class="field-group">
+    <label>If you have minor children, who would you name as their guardian if both parents were deceased?</label>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Guardian — Full Name</label>
+        <input type="text" id="guardian1_name">
+      </div>
+      <div class="field-group">
+        <label>Relationship to Children</label>
+        <input type="text" id="guardian1_rel">
+      </div>
+    </div>
+    <div class="field-row field-group">
+      <div class="field-group">
+        <label>Guardian — City / State</label>
+        <input type="text" id="guardian1_location">
+      </div>
+      <div class="field-group">
+        <label>Phone / Email</label>
+        <input type="text" id="guardian1_contact">
+      </div>
+    </div>
+    <div class="field-row field-group">
+      <div class="field-group">
+        <label>Alternate Guardian — Full Name</label>
+        <input type="text" id="guardian2_name">
+      </div>
+      <div class="field-group">
+        <label>Alternate Guardian — Relationship</label>
+        <input type="text" id="guardian2_rel">
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+  <div class="section-label">Funeral &amp; End-of-Life Wishes</div>
+  <div class="info-box">These preferences will be noted but are not legally binding in most states. However, they guide your executor and family.</div>
+
+  <div class="field-group">
+    <label>Disposition of remains</label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="remains" id="rem1" value="burial"><label for="rem1">Traditional burial</label></div>
+      <div class="radio-card"><input type="radio" name="remains" id="rem2" value="cremation"><label for="rem2">Cremation</label></div>
+      <div class="radio-card"><input type="radio" name="remains" id="rem3" value="other"><label for="rem3">Other / discuss</label></div>
+      <div class="radio-card"><input type="radio" name="remains" id="rem4" value="no_pref"><label for="rem4">No preference</label></div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Any specific wishes regarding your funeral or memorial service?</label>
+    <textarea id="funeral_notes" rows="2" placeholder="Optional — religious preference, location, who you'd want notified, etc."></textarea>
+  </div>
+
+  <div class="field-group">
+    <label>Healthcare directive preferences<span class="hint">Your healthcare directive (living will) will specify your wishes regarding life-sustaining treatment.</span></label>
+    <div class="radio-grid">
+      <div class="radio-card"><input type="radio" name="life_sustain" id="ls1" value="withdraw"><label for="ls1">If I have no meaningful chance of recovery, I want life-sustaining treatment withdrawn</label></div>
+      <div class="radio-card"><input type="radio" name="life_sustain" id="ls2" value="continue"><label for="ls2">I want all available measures taken regardless</label></div>
+      <div class="radio-card"><input type="radio" name="life_sustain" id="ls3" value="discuss"><label for="ls3">I want to discuss this in detail</label></div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="goToPage(4)">← Back</button>
+    <button class="btn-primary gold" onclick="goToPage(6)">Continue: Agents →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 6 — AGENTS & FIDUCIARIES
+═══════════════════════════════════════════════ -->
+<div class="page" id="page6">
+<div class="page-inner">
+  <div class="page-title">Agents &amp; Fiduciaries</div>
+  <p class="page-subtitle">You will need to designate trusted individuals for several important roles. List your first choice and an alternate for each. These individuals must be adults and, in most cases, residents of the United States.</p>
+
+  <div class="info-box">
+    <strong>Quick reference:</strong><br>
+    <strong>Executor / Trustee</strong> — manages and distributes your estate after death.<br>
+    <strong>Successor Trustee</strong> — takes over management of a trust if you become incapacitated or die.<br>
+    <strong>Durable Power of Attorney (DPOA)</strong> — manages your finances if you are incapacitated.<br>
+    <strong>Healthcare Power of Attorney (HPOA)</strong> — makes medical decisions if you cannot.
+  </div>
+
+  <!-- EXECUTOR -->
+  <div class="section-label">Executor / Personal Representative (Will)</div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Primary Executor — Full Name <span class="req">*</span></label>
+      <input type="text" id="exec1_name">
+    </div>
+    <div class="field-group">
+      <label>Relationship</label>
+      <input type="text" id="exec1_rel">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>City / State</label>
+      <input type="text" id="exec1_loc">
+    </div>
+    <div class="field-group">
+      <label>Phone / Email</label>
+      <input type="text" id="exec1_contact">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Alternate Executor — Full Name</label>
+      <input type="text" id="exec2_name">
+    </div>
+    <div class="field-group">
+      <label>Relationship</label>
+      <input type="text" id="exec2_rel">
+    </div>
+  </div>
+
+  <!-- TRUSTEE -->
+  <hr class="section-divider">
+  <div class="section-label">Successor Trustee (Trust — if applicable)</div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Primary Successor Trustee — Full Name</label>
+      <input type="text" id="trustee1_name">
+    </div>
+    <div class="field-group">
+      <label>Relationship</label>
+      <input type="text" id="trustee1_rel">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>City / State</label>
+      <input type="text" id="trustee1_loc">
+    </div>
+    <div class="field-group">
+      <label>Phone / Email</label>
+      <input type="text" id="trustee1_contact">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Alternate Successor Trustee — Full Name</label>
+      <input type="text" id="trustee2_name">
+    </div>
+    <div class="field-group">
+      <label>Relationship</label>
+      <input type="text" id="trustee2_rel">
+    </div>
+  </div>
+
+  <!-- DPOA -->
+  <hr class="section-divider">
+  <div class="section-label">Durable Power of Attorney — Financial</div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Primary Agent — Full Name <span class="req">*</span></label>
+      <input type="text" id="dpoa1_name">
+    </div>
+    <div class="field-group">
+      <label>Relationship</label>
+      <input type="text" id="dpoa1_rel">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>City / State</label>
+      <input type="text" id="dpoa1_loc">
+    </div>
+    <div class="field-group">
+      <label>Phone / Email</label>
+      <input type="text" id="dpoa1_contact">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Alternate Agent — Full Name</label>
+      <input type="text" id="dpoa2_name">
+    </div>
+    <div class="field-group">
+      <label>Relationship</label>
+      <input type="text" id="dpoa2_rel">
+    </div>
+  </div>
+
+  <!-- HPOA -->
+  <hr class="section-divider">
+  <div class="section-label">Healthcare Power of Attorney</div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Primary Healthcare Agent — Full Name <span class="req">*</span></label>
+      <input type="text" id="hpoa1_name">
+    </div>
+    <div class="field-group">
+      <label>Relationship</label>
+      <input type="text" id="hpoa1_rel">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>City / State</label>
+      <input type="text" id="hpoa1_loc">
+    </div>
+    <div class="field-group">
+      <label>Phone / Email</label>
+      <input type="text" id="hpoa1_contact">
+    </div>
+  </div>
+  <div class="field-row field-group">
+    <div class="field-group">
+      <label>Alternate Healthcare Agent — Full Name</label>
+      <input type="text" id="hpoa2_name">
+    </div>
+    <div class="field-group">
+      <label>Relationship</label>
+      <input type="text" id="hpoa2_rel">
+    </div>
+  </div>
+
+  <hr class="section-divider">
+  <div class="section-label">Final Notes</div>
+  <div class="field-group">
+    <label>Is there anything else you want us to know — concerns, questions, or anything that doesn't fit neatly into the categories above?</label>
+    <textarea id="final_notes" rows="4" placeholder="Anything goes here. This is your space."></textarea>
+  </div>
+
+  <div class="field-group">
+    <label>How did you hear about Midaire Counsel?</label>
+    <select id="referral_source">
+      <option value="">Select</option>
+      <option>Referral from friend or family</option>
+      <option>Referral from another attorney</option>
+      <option>LinkedIn</option>
+      <option>Web search</option>
+      <option>Existing client</option>
+      <option>Other</option>
+    </select>
+  </div>
+
+  <div id="status_msg" class="status-msg"></div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="goToPage(5)">← Back</button>
+    <button class="btn-primary gold" id="submit_btn" onclick="submitForm()">Submit to Midaire Counsel ✓</button>
+  </div>
+
+  <p style="font-size:0.75rem;color:var(--light-slate);margin-top:20px;line-height:1.5;">
+    By submitting this form you acknowledge that the information provided is accurate to the best of your knowledge and that submission of this form does not create an attorney-client relationship. An attorney from Midaire Counsel will contact you to confirm receipt and schedule your consultation.
+  </p>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 7 — CONFIRMATION
+═══════════════════════════════════════════════ -->
+<div class="page" id="page7">
+<div class="confirm-wrap">
+  <div class="confirm-icon">✓</div>
+  <h2>Received. Thank You.</h2>
+  <p>Your estate planning intake has been submitted to Midaire Counsel. We'll review your information before your consultation and will reach out within one business day to confirm receipt and schedule next steps.</p>
+  <p style="margin-top:20px;">Questions in the meantime? Call us at <strong>(678) 906-9062</strong> or email <strong>malebrun@midaire.com</strong>.</p>
+</div>
+</div>
+
+<script>
+// ── EMAILJS CONFIGURATION ──────────────────────────────────────────────
+// SETUP REQUIRED:
+// 1. Create a free account at https://www.emailjs.com
+// 2. Create an Email Service (Gmail recommended) — copy the SERVICE ID
+// 3. Create an Email Template — use {{message}} as the body variable — copy TEMPLATE ID
+// 4. Go to Account > API Keys — copy your PUBLIC KEY
+// 5. Replace the three values below
+
+const EMAILJS_PUBLIC_KEY  = "QTJqZYZQqn5BRrOXv";   
+const EMAILJS_SERVICE_ID  = "service_fvghxng";    
+const EMAILJS_TEMPLATE_ID = "template_bgclu6k";  
+const ATTORNEY_EMAIL      = "malebrun@midaire.com";
+
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
+// ── NAVIGATION ────────────────────────────────────────────────────────
+let currentPage = 1;
+const totalPages = 6;
+
+function goToPage(n) {
+  document.getElementById('page' + currentPage).classList.remove('active');
+  document.getElementById('page' + n).classList.add('active');
+
+  // Update progress circles
+  for (let i = 1; i <= totalPages; i++) {
+    const circle = document.getElementById('sc' + i);
+    const label  = document.getElementById('sl' + i);
+    circle.classList.remove('active', 'done');
+    label.classList.remove('active');
+    if (i < n) { circle.classList.add('done'); circle.textContent = '✓'; }
+    else if (i === n) { circle.classList.add('active'); circle.textContent = i; label.classList.add('active'); }
+    else { circle.textContent = i; }
+  }
+  for (let i = 1; i <= totalPages - 1; i++) {
+    const line = document.getElementById('line' + i);
+    line.classList.toggle('done', i < n);
+  }
+
+  currentPage = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── CONDITIONAL VISIBILITY ────────────────────────────────────────────
+function toggleSpouse(show) {
+  document.getElementById('spouse_fields').classList.toggle('visible', show);
+}
+function showEl(id) { document.getElementById(id).classList.add('visible'); }
+function hideEl(id) { document.getElementById(id).classList.remove('visible'); }
+
+// ── DYNAMIC TABLE ROWS ────────────────────────────────────────────────
+function removeRow(btn) {
+  const row = btn.closest('tr');
+  const tbody = row.parentElement;
+  if (tbody.rows.length > 1) row.remove();
+}
+
+function makeChildRow() {
+  return `<tr>
+    <td><input type="text" placeholder="First Middle Last"></td>
+    <td><input type="date"></td>
+    <td><select><option value="">Select</option>
+      <option>Biological — joint</option><option>Biological — my prior relationship</option>
+      <option>Biological — spouse's prior relationship</option><option>Adopted</option>
+      <option>Stepchild (not adopted)</option><option>Deceased</option></select></td>
+    <td><input type="text" maxlength="2" placeholder="GA"></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addChildRow() { document.getElementById('children_body').insertAdjacentHTML('beforeend', makeChildRow()); }
+
+function makePriorRow() {
+  return `<tr>
+    <td><select><option>Primary client</option><option>Spouse / Partner</option></select></td>
+    <td><input type="text" placeholder="Full name"></td>
+    <td><select><option>Divorce</option><option>Death</option><option>Annulment</option></select></td>
+    <td><input type="text" maxlength="4" placeholder="Year"></td>
+    <td><input type="text" maxlength="2" placeholder="GA"></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addPriorRow() { document.getElementById('prior_body').insertAdjacentHTML('beforeend', makePriorRow()); }
+
+function makeBeneRow() {
+  return `<tr>
+    <td><input type="text"></td><td><input type="text" placeholder="Parent, sibling, charity…"></td>
+    <td><input type="text"></td><td><input type="text" placeholder="Optional"></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addBeneRow() { document.getElementById('bene_body').insertAdjacentHTML('beforeend', makeBeneRow()); }
+
+function makeRealtyRow() {
+  return `<tr>
+    <td><input type="text" placeholder="Street, City"></td>
+    <td><input type="text" maxlength="2" placeholder="GA"></td>
+    <td><select><option value="">How titled</option><option>My name alone</option>
+      <option>Joint tenants w/ right of survivorship</option><option>Tenants in common</option>
+      <option>In a trust</option><option>In an LLC / entity</option>
+      <option>Inherited — not yet retitled</option><option>Unsure</option></select></td>
+    <td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$ or None"></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addRealtyRow() { document.getElementById('realty_body').insertAdjacentHTML('beforeend', makeRealtyRow()); }
+
+function makeAccountRow() {
+  return `<tr>
+    <td><input type="text" placeholder="Bank / Brokerage name"></td>
+    <td><select><option value="">Type</option><option>Checking</option><option>Savings</option>
+      <option>Brokerage / Investment</option><option>Money Market</option><option>CD</option>
+      <option>Crypto</option><option>Other</option></select></td>
+    <td><input type="text" placeholder="$"></td>
+    <td><select><option value="">?</option><option>Yes</option><option>No</option><option>Unsure</option></select></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addAccountRow() { document.getElementById('accounts_body').insertAdjacentHTML('beforeend', makeAccountRow()); }
+
+function makeRetirementRow() {
+  return `<tr>
+    <td><input type="text"></td>
+    <td><select><option value="">Type</option><option>401(k)</option><option>403(b)</option>
+      <option>IRA (Traditional)</option><option>IRA (Roth)</option><option>SEP-IRA</option>
+      <option>Pension</option><option>Other</option></select></td>
+    <td><input type="text" placeholder="$"></td><td><input type="text" placeholder="Name on file"></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addRetirementRow() { document.getElementById('retirement_body').insertAdjacentHTML('beforeend', makeRetirementRow()); }
+
+function makeInsuranceRow() {
+  return `<tr>
+    <td><input type="text"></td>
+    <td><select><option value="">Type</option><option>Term</option><option>Whole Life</option>
+      <option>Universal Life</option><option>Group / Employer</option><option>Other</option></select></td>
+    <td><input type="text" placeholder="$"></td><td><input type="text" placeholder="Name on file"></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addInsuranceRow() { document.getElementById('insurance_body').insertAdjacentHTML('beforeend', makeInsuranceRow()); }
+
+function makeBusinessRow() {
+  return `<tr>
+    <td><input type="text"></td>
+    <td><select><option value="">Type</option><option>LLC</option><option>S-Corp</option>
+      <option>C-Corp</option><option>Partnership</option><option>Sole Proprietorship</option>
+      <option>Other</option></select></td>
+    <td><input type="text" placeholder="%" maxlength="6"></td>
+    <td><input type="text" maxlength="2" placeholder="GA"></td><td><input type="text" placeholder="$"></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addBusinessRow() { document.getElementById('business_body').insertAdjacentHTML('beforeend', makeBusinessRow()); }
+
+function makeVehicleRow() {
+  return `<tr>
+    <td><input type="text" placeholder="Car, boat, RV…"></td><td><input type="text"></td>
+    <td><input type="text" placeholder="$"></td>
+    <td><select><option>My name alone</option><option>Joint</option><option>Spouse only</option></select></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addVehicleRow() { document.getElementById('vehicles_body').insertAdjacentHTML('beforeend', makeVehicleRow()); }
+
+function makeDigitalRow() {
+  return `<tr>
+    <td><input type="text" placeholder="Crypto, domain, IP royalty…"></td><td><input type="text"></td>
+    <td><input type="text" placeholder="$"></td><td><input type="text"></td>
+    <td><button class="remove-row-btn" onclick="removeRow(this)">✕</button></td></tr>`;
+}
+function addDigitalRow() { document.getElementById('digital_body').insertAdjacentHTML('beforeend', makeDigitalRow()); }
+
+// ── TABLE EXTRACTION ──────────────────────────────────────────────────
+function extractTable(tbodyId, headers) {
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return '';
+  const rows = [];
+  for (const row of tbody.rows) {
+    const cells = [];
+    for (let i = 0; i < row.cells.length - 1; i++) {
+      const inp = row.cells[i].querySelector('input, select, textarea');
+      cells.push(inp ? inp.value.trim() : '');
+    }
+    if (cells.some(c => c)) rows.push(headers.map((h, i) => `${h}: ${cells[i]||'—'}`).join(' | '));
+  }
+  return rows.join('\n') || '(none entered)';
+}
+
+function getRadio(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : '(not answered)';
+}
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+// ── BUILD EMAIL BODY ──────────────────────────────────────────────────
+function buildEmailBody() {
+  const isCoupleEl = document.querySelector('input[name="is_couple"]:checked');
+  const isCouple = isCoupleEl && isCoupleEl.value === 'yes';
+
+  let body = `=== MIDAIRE COUNSEL — ESTATE PLANNING INTAKE ===
+Submitted: ${new Date().toLocaleString()}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — TOW-Q (TRUST OR WILL QUALIFIER)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Marital Status: ${getRadio('marital')}
+Children: ${getRadio('has_children')}
+Stepchildren: ${getRadio('stepchildren')}
+Special Needs Beneficiary: ${getRadio('special_needs')}
+Other Real Estate: ${getRadio('other_realty')}
+Multi-State Real Estate: ${getRadio('multi_state')}
+Inherited Property: ${getRadio('inherited')}
+Business Interest: ${getRadio('business_interest')}
+Estimated Estate Value: ${getRadio('estate_value')}
+Incapacity Planning Concern: ${getRadio('incapacity')}
+Privacy Important: ${getRadio('privacy')}
+Contest Risk: ${getRadio('contest_risk')}
+Conditional Distributions: ${getRadio('conditions')}
+Qualifier Notes: ${getVal('tow_notes') || '(none)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — CONTACT INFORMATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRIMARY CLIENT
+Name: ${getVal('p1_first')} ${getVal('p1_middle')} ${getVal('p1_last')} ${getVal('p1_suffix')}
+DOB: ${getVal('p1_dob')}  |  Born In: ${getVal('p1_birth_state')}
+Address: ${getVal('p1_street')}, ${getVal('p1_city')}, ${getVal('p1_state')} ${getVal('p1_zip')}
+Email: ${getVal('p1_email')}  |  Phone: ${getVal('p1_phone')}`;
+
+  if (isCouple) {
+    body += `
+
+SPOUSE / PARTNER
+Name: ${getVal('p2_first')} ${getVal('p2_middle')} ${getVal('p2_last')} ${getVal('p2_suffix')}
+DOB: ${getVal('p2_dob')}  |  Born In: ${getVal('p2_birth_state')}
+Email: ${getVal('p2_email')}  |  Phone: ${getVal('p2_phone')}
+Date of Marriage: ${getVal('marriage_date')}  |  State: ${getVal('marriage_state')}`;
+  }
+
+  body += `
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — FAMILY & BENEFICIARIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHILDREN
+${extractTable('children_body', ['Name','DOB','Relationship','State'])}
+
+PRIOR MARRIAGES: ${getRadio('prior_marriage')}
+${extractTable('prior_body', ['Who','Former Spouse','Ended','Year','State'])}
+
+OTHER BENEFICIARIES
+${extractTable('bene_body', ['Name','Relationship','Location','Notes'])}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — ASSET INVENTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REAL ESTATE
+${extractTable('realty_body', ['Address','State','How Titled','Value','Mortgage'])}
+
+BANK & INVESTMENT ACCOUNTS
+${extractTable('accounts_body', ['Institution','Type','Balance','Beneficiary Designated'])}
+
+RETIREMENT ACCOUNTS
+${extractTable('retirement_body', ['Institution','Type','Balance','Beneficiary'])}
+
+LIFE INSURANCE
+${extractTable('insurance_body', ['Company','Type','Death Benefit','Beneficiary'])}
+
+BUSINESS INTERESTS
+${extractTable('business_body', ['Name','Entity Type','Ownership %','State','Value'])}
+
+VEHICLES & TITLED PROPERTY
+${extractTable('vehicles_body', ['Description','Year/Make/Model','Value','Titled'])}
+
+DIGITAL & OTHER ASSETS
+${extractTable('digital_body', ['Description','Platform','Value','Notes'])}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — DISTRIBUTION WISHES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Primary Distribution: ${getVal('dist_primary')}
+If Beneficiary Predeceases: ${getRadio('predecease')}
+Specific Bequests: ${getVal('dist_specific') || '(none)'}
+Charitable Gifts: ${getRadio('charity')} — ${getVal('charity_desc') || ''}
+Minor Inheritance Age: ${getRadio('minor_age')}
+
+Guardian (Primary): ${getVal('guardian1_name')} | ${getVal('guardian1_rel')} | ${getVal('guardian1_location')} | ${getVal('guardian1_contact')}
+Guardian (Alternate): ${getVal('guardian2_name')} | ${getVal('guardian2_rel')}
+
+Remains Disposition: ${getRadio('remains')}
+Funeral Notes: ${getVal('funeral_notes') || '(none)'}
+Life-Sustaining Treatment: ${getRadio('life_sustain')}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6 — AGENTS & FIDUCIARIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXECUTOR
+Primary: ${getVal('exec1_name')} | ${getVal('exec1_rel')} | ${getVal('exec1_loc')} | ${getVal('exec1_contact')}
+Alternate: ${getVal('exec2_name')} | ${getVal('exec2_rel')}
+
+SUCCESSOR TRUSTEE
+Primary: ${getVal('trustee1_name')} | ${getVal('trustee1_rel')} | ${getVal('trustee1_loc')} | ${getVal('trustee1_contact')}
+Alternate: ${getVal('trustee2_name')} | ${getVal('trustee2_rel')}
+
+DURABLE POWER OF ATTORNEY (Financial)
+Primary: ${getVal('dpoa1_name')} | ${getVal('dpoa1_rel')} | ${getVal('dpoa1_loc')} | ${getVal('dpoa1_contact')}
+Alternate: ${getVal('dpoa2_name')} | ${getVal('dpoa2_rel')}
+
+HEALTHCARE POWER OF ATTORNEY
+Primary: ${getVal('hpoa1_name')} | ${getVal('hpoa1_rel')} | ${getVal('hpoa1_loc')} | ${getVal('hpoa1_contact')}
+Alternate: ${getVal('hpoa2_name')} | ${getVal('hpoa2_rel')}
+
+Final Notes: ${getVal('final_notes') || '(none)'}
+Referral Source: ${getVal('referral_source')}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+END OF INTAKE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+  return body;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────
+async function submitForm() {
+  const statusEl = document.getElementById('status_msg');
+  const btn = document.getElementById('submit_btn');
+
+  // Basic validation
+  const firstName = getVal('p1_first');
+  const lastName  = getVal('p1_last');
+  const email     = getVal('p1_email');
+
+  if (!firstName || !lastName || !email) {
+    statusEl.className = 'status-msg error visible';
+    statusEl.textContent = 'Please complete the required fields: client name and email (Section 2 — Contact Information).';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  statusEl.className = 'status-msg';
+
+  const emailBody = buildEmailBody();
+  const clientName = `${firstName} ${lastName}`;
+
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email: ATTORNEY_EMAIL,
+      subject: `Estate Planning Intake — ${clientName}`,
+      client_name: clientName,
+      message: emailBody
+    });
+
+    goToPage(7);
+
+    // Update progress to show all done
+    for (let i = 1; i <= totalPages; i++) {
+      const circle = document.getElementById('sc' + i);
+      if (circle) { circle.classList.add('done'); circle.textContent = '✓'; }
+      const line = document.getElementById('line' + i);
+      if (line) line.classList.add('done');
+    }
+
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    statusEl.className = 'status-msg error visible';
+    statusEl.innerHTML = `Submission failed. Please try again or email your intake directly to <strong>malebrun@midaire.com</strong>. (Error: ${err.text || err.message || 'unknown'})`;
+    btn.disabled = false;
+    btn.textContent = 'Submit to Midaire Counsel ✓';
+  }
+}
+</script>
+</body>
+</html>
